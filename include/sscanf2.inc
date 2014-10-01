@@ -1,26 +1,26 @@
-/*  
+/*
  *  Version: MPL 1.1
- *  
+ *
  *  The contents of this file are subject to the Mozilla Public License Version
  *  1.1 (the "License"); you may not use this file except in compliance with
  *  the License. You may obtain a copy of the License at
  *  [url]http://www.mozilla.org/MPL/[/url]
- *  
+ *
  *  Software distributed under the License is distributed on an "AS IS" basis,
  *  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
  *  for the specific language governing rights and limitations under the
  *  License.
- *  
+ *
  *  The Original Code is the sscanf 2.0 SA:MP plugin.
- *  
+ *
  *  The Initial Developer of the Original Code is Alex "Y_Less" Cole.
  *  Portions created by the Initial Developer are Copyright (C) 2010
  *  the Initial Developer. All Rights Reserved.
- *  
+ *
  *  Contributor(s):
- *  
+ *
  *  Special Thanks to:
- *  
+ *
  *      SA:MP Team past, present and future
  */
 
@@ -58,14 +58,14 @@ static stock
 
 #if defined _inc_a_npc
 	forward SSCANF_PlayerCheck();
-	
+
 	/*
 	  OnNPCModeInit
 
 	  Called when the script starts if it is a NPC mode, sets up the system,
 	  then calls the "real" OnNPCModeInit (using the new ALS 2 hook method).
 	*/
-	
+
 	public OnNPCModeInit()
 	{
 		SSCANF_Init(MAX_PLAYERS, INVALID_PLAYER_ID, MAX_PLAYER_NAME);
@@ -79,7 +79,7 @@ static stock
 		#endif
 		return 1;
 	}
-	
+
 	#if defined _ALS_OnNPCModeInit
 		#undef OnNPCModeInit
 	#else
@@ -89,13 +89,13 @@ static stock
 	#if defined SSCANF_OnNPCModeInit
 		forward SSCANF_OnNPCModeInit();
 	#endif
-	
+
 	/*
 	  SSCANF_PlayerCheck
 
 	  NPC modes have no "OnPlayerConnect callback, so we need to simulate one.
 	*/
-	
+
 	#if !defined SSCANF_NO_PLAYERS
 		public SSCANF_PlayerCheck()
 		{
@@ -132,7 +132,7 @@ static stock
 	  then calls the "real" OnFilterScriptInit (using the new ALS 2 hook
 	  method).
 	*/
-	
+
 	public OnFilterScriptInit()
 	{
 		SSCANF_Init(GetMaxPlayers(), INVALID_PLAYER_ID, MAX_PLAYER_NAME);
@@ -142,7 +142,7 @@ static stock
 		#endif
 		return 1;
 	}
-	
+
 	#if defined _ALS_OnFilterScriptInit
 		#undef OnFilterScriptInit
 	#else
@@ -152,7 +152,7 @@ static stock
 	#if defined SSCANF_OnFilterScriptInit
 		forward SSCANF_OnFilterScriptInit();
 	#endif
-	
+
 	/*
 	  OnGameModeInit
 
@@ -160,7 +160,7 @@ static stock
 	  called in filterscripts so we don't want to reinitialise the system in
 	  that case.
 	*/
-	
+
 	public OnGameModeInit()
 	{
 		if (!SSCANF_gInit)
@@ -173,7 +173,7 @@ static stock
 		#endif
 		return 1;
 	}
-	
+
 	#if defined _ALS_OnGameModeInit
 		#undef OnGameModeInit
 	#else
@@ -183,7 +183,7 @@ static stock
 	#if defined SSCANF_OnGameModeInit
 		forward SSCANF_OnGameModeInit();
 	#endif
-	
+
 	/*
 	  OnPlayerConnect
 
@@ -192,7 +192,7 @@ static stock
 	  still knows that the player is really connected.  Also stores their name
 	  internally.
 	*/
-	
+
 	public OnPlayerConnect(playerid)
 	{
 		new
@@ -204,7 +204,7 @@ static stock
 		#endif
 		return 1;
 	}
-	
+
 	#if defined _ALS_OnPlayerConnect
 		#undef OnPlayerConnect
 	#else
@@ -214,13 +214,13 @@ static stock
 	#if defined SSCANF_OnPlayerConnect
 		forward SSCANF_OnPlayerConnect(playerid);
 	#endif
-	
+
 	/*
 	  OnPlayerDisconnect
 
 	  Called when a player disconnects, or when a script is ended.
 	*/
-	
+
 	public OnPlayerDisconnect(playerid, reason)
 	{
 		#if defined SSCANF_OnPlayerDisconnect
@@ -229,7 +229,7 @@ static stock
 		SSCANF_Leave(playerid);
 		return 1;
 	}
-	
+
 	#if defined _ALS_OnPlayerDisconnect
 		#undef OnPlayerDisconnect
 	#else
@@ -302,7 +302,7 @@ static stock
 #define kustom_EXTRN:%0##%1,%2|||%3<%8>|||%4,%5) EXTRY:%0##%1k<%8>,%2,%3|||%4|||%5)
 //#define bin_EXTRW:%0##%1,%2|||%3[%7]|||%4,%5) EXTRY:%0##%1a<b>[%7],%2,%3|||%4|||%5)
 
-SSCANF:weapon(string[])
+SSCANF:weapon(string[]);
 {
 	// This function is VERY basic, needs VASTLY improving to detect variations.
 	if ('0' <= string[0] <= '9')
@@ -362,7 +362,7 @@ SSCANF:weapon(string[])
 	return -1;
 }
 
-SSCANF:vehicle(string[])
+SSCANF:vehicle(string[]);
 {
 	// This function is VERY basic, needs VASTLY improving to detect variations.
 	if ('0' <= string[0] <= '9')

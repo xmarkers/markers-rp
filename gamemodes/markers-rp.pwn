@@ -53,11 +53,11 @@ forward _KickPlayerDelayed(playerid);
 public OnGameModeInit()
 {
 	// Логирование ошибок MySQL в HTML виде
-        mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML);
-        // Установим соединение с MySQL
-        MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
-	
-        return 1;
+	mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML);
+	// Установим соединение с MySQL
+	MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
+
+	return 1;
 }
 
 public OnGameModeExit()
@@ -274,7 +274,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 	    case DIALOG_LOGIN: // Логинимся
 	    {
-	        if(!response) return Kick(playerid); // Если отказался, кикнем
+		if(!response) return Kick(playerid); // Если отказался, кикнем
 		if(strlen(inputtext) <= 5 || strlen(inputtext) >= 14) // Проверим длинну пароля
 			return ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Ошибка", C_COLOR_RED "Пароль должен быть не короче 6 символов и не длиньше 16!\n" C_COLOR_WHITE "Пожалуйста, введите пароль ещё раз!", "Войти", "Отмена");
 
@@ -337,16 +337,14 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 public OnPlayerDataLoaded(playerid, race_check)
 {
 	if(race_check != MySQL_RACE_CHECK[playerid]) // Проверка валидности пользователя на которого запрашивали данные
-	    return Kick(playerid);
-	    
+		return Kick(playerid);
 	orm_setkey(Player[playerid][ORM_ID], "id");
 
-
-        // Установим точку взгляда камеры
+	// Установим точку взгляда камеры
 	SetPlayerCameraPos(playerid,1678.2035,-1481.4669,110.1527);
 	SetPlayerCameraLookAt(playerid,1614.6501,-1576.7792,88.1527);
 
-        // Поприветствуем игрока
+	// Поприветствуем игрока
 	new welcome_cap[144];
 	welcome_cap = "Добро пожаловать на сервер " SERVER_NAME "!";
 	SendClientMessage(playerid, COLOR_YELLOW, welcome_cap);
