@@ -26,12 +26,13 @@ enum E_PLAYERS
 };
 
 // Структура диалогов
-enum DIALOGS 
+enum  
 {
-	Login,
-	Register
+	DIALOG_LOGIN_INVALID,
+	DIALOG_UNUSED,
+	DIALOG_LOGIN,
+	DIALOG_REGISTER
 };
-
 
 new Player[MAX_PLAYERS][E_PLAYERS]; // Объявим массив игроков
 new MySQL_RACE_CHECK[MAX_PLAYERS]; // Для проверки валидности пользователя при длительных запросах
@@ -51,22 +52,27 @@ forward _KickPlayerDelayed(playerid);
 
 public OnGameModeInit()
 {
-        mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML); // Логирование ошибок MySQL в HTML виде
-        MySQL_Handle = mysql_connect(SQL_CONNECT_PROPS[Host], SQL_CONNECT_PROPS[Login], SQL_CONNECT_PROPS[DataBase], SQL_CONNECT_PROPS[Password]); // Установим соединение с MySQL
+	// Логирование ошибок MySQL в HTML виде
+        mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML);
+        // Установим соединение с MySQL
+        MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
 	
         return 1;
 }
 
 public OnGameModeExit()
 {
-        for(new p=0; p < MAX_PLAYERS; ++p) // Сбросим данные пользователей в MySQL
+        // Сбросим данные пользователей в MySQL
+        for(new p=0; p < MAX_PLAYERS; ++p)
          {
            if(IsPlayerConnected(p) && Player[p][IsLoggedIn] && Player[p][ID] > 0)
             {
-             orm_save(Player[p][ORM_ID]); // Сохранение данных
+             // Сохранение данных
+             orm_save(Player[p][ORM_ID]); 
             }
          }
-        mysql_close(); // Закроем MySQL
+	// Закроем MySQL
+        mysql_close();
 	return 1;
 }
 
@@ -265,11 +271,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
 	{
-	    case DIALOGS[Login]: // Логинимся
+	    case DIALOG_LOGIN: // Логинимся
 	    {
 	        if(!response) return Kick(playerid); // Если отказался, кикнем
-		if(strlen(inputtext) <= 5 or strlen(inputtext) >= 14) // Проверим длинну пароля
-			return ShowPlayerDialog(playerid, DIALOGS[Login], DIALOG_STYLE_PASSWORD, "Ошибка", COLORS_CHAT[Red] "Пароль должен быть не короче 6 символов и не длиньше 16!\n" COLORS_CHAT[White] "Пожалуйста, введите пароль ещё раз!", "Войти", "Отмена");
+		if(strlen(inputtext) <= 5 || strlen(inputtext) >= 14) // Проверим длинну пароля
+			return ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Ошибка", C_COLOR_RED "Пароль должен быть не короче 6 символов и не длиньше 16!\n" C_COLOR_WHITE "Пожалуйста, введите пароль ещё раз!", "Войти", "Отмена");
 
 		new hashed_pass[33];
 		md5(inputtext, hashed_pass); // Получим md5 пароля
@@ -286,11 +292,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    Player[playerid][LoginAttempts]++;
 		    if(Player[playerid][LoginAttempts] >= 3)
 		    {
-				ShowPlayerDialog(playerid, DIALOG_UNUSED, DIALOG_STYLE_MSGBOX, "Login", CHAT_RED "You have mistyped your password too often (3 times).", "Okay", "");
+				ShowPlayerDialog(playerid, DIALOG_UNUSED, DIALOG_STYLE_MSGBOX, "Login", C_COLOR_RED "You have mistyped your password too often (3 times).", "Okay", "");
 		        DelayedKick(playerid);
 			}
 			else
-			    ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", CHAT_RED "Wrong password!\n" CHAT_WHITE "Please enter your password in the field below:", "Login", "Abort");
+			    ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", C_COLOR_RED "Wrong password!\n" C_COLOR_WHITE "Please enter your password in the field below:", "Login", "Abort");
 		}
 	    }
 	    
@@ -301,7 +307,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	            
             if(strlen(inputtext) <= 5)
 				return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registration",
-					CHAT_RED "Your password must be longer than 5 characters!\n" CHAT_WHITE "Please enter your password in the field below:",
+					C_COLOR_RED "Your password must be longer than 5 characters!\n" C_COLOR_WHITE "Please enter your password in the field below:",
 					"Register", "Abort");
 
 			//WP_Hash(Player[playerid][Password], 129, inputtext);
@@ -340,8 +346,9 @@ public OnPlayerDataLoaded(playerid, race_check)
 	SetPlayerCameraLookAt(playerid,1614.6501,-1576.7792,88.1527);
 
         // Поприветствуем игрока
-	new welcome_cap = "Добро пожаловать на сервер " SERVER_NAME "!";
-	SendClientMessage(playerid, COLORS[Yellow], welcome_cap);
+	new welcome_cap[144];
+	welcome_cap = "Добро пожаловать на сервер " SERVER_NAME "!";
+	SendClientMessage(playerid, COLOR_YELLOW, welcome_cap);
 
 	// Проверим результат 
 	new welcome_text[256];
@@ -350,14 +357,14 @@ public OnPlayerDataLoaded(playerid, race_check)
 	{
 		case ERROR_OK: // Есть регистрация
 		{
-			format(welcome_text, sizeof(welcome_text), COLORS_CHAT[White] welcome_cap "\nВаш ник зарегистрирован\n\nЛогин: " COLORS_CHAT[LimeGreen] "%s\n" COLORS_CHAT[White] "Введите пароль:", Player[playerid][Name]);
-			ShowPlayerDialog(playerid, DIALOGS[Login], DIALOG_STYLE_PASSWORD, COLORS_CHAT[CornflowerBlue] "Авторизация", welcome_text, "Войти", "Отмена");
+			format(welcome_text, sizeof(welcome_text), "&s&s\nВаш ник зарегистрирован\n\nЛогин: %s%s\n{FFFFFF}Введите пароль:", C_COLOR_WHITE, welcome_cap, C_COLOR_LIMEGREEN, Player[playerid][Name], C_COLOR_WHITE);
+			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Авторизация", welcome_text, "Войти", "Отмена");
 			Player[playerid][IsRegistered] = true;
 		}
 		case ERROR_NO_DATA: // Нет регистрации
 		{
-			format(welcome_text, sizeof(welcome_text), COLORS_CHAT[White] welcome_cap "\nЧтобы начать игру вам необходиму пройти регистрацию\n\nВведите пароль для Вашего аккаунта: " COLORS_CHAT[LimeGreen] "%s\n" COLORS_CHAT[White] "\nОн будет запрашиваться каждый раз, когда вы заходите на сервер.\n\n" COLORS_CHAT[LimeGreen] "\tПримечания:\n\t- Пароль может состоять из руских и латинских символов\n\t- Пароль чуствителен к регистру\n\t- Длина пароля от 6-ти до 15-ти символов", Player[playerid][Name]);
-			ShowPlayerDialog(playerid, DIALOGS[Register], DIALOG_STYLE_PASSWORD, COLORS_CHAT[CornflowerBlue] "Регистрация", welcome_text, "Принять", "Отмена");
+			format(welcome_text, sizeof(welcome_text), C_COLOR_WHITE+welcome_cap+"\nЧтобы начать игру вам необходиму пройти регистрацию\n\nВведите пароль для Вашего аккаунта: "+C_COLOR_LIMEGREEN+"%s\n"+C_COLOR_WHITE+"\nОн будет запрашиваться каждый раз, когда вы заходите на сервер.\n\n"+C_COLOR_LIMEGREEN+"\tПримечания:\n\t- Пароль может состоять из руских и латинских символов\n\t- Пароль чуствителен к регистру\n\t- Длина пароля от 6-ти до 15-ти символов", Player[playerid][Name]);
+			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Регистрация", welcome_text, "Принять", "Отмена");
 			Player[playerid][IsRegistered] = false;
 		}
 	}
