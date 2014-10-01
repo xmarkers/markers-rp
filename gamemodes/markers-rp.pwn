@@ -5,9 +5,9 @@
 #include <zcmd>
 #include <Encrypt>
 
-new MySQL_Handle = -1; // Handle подключения MySQL
+new MySQL_Handle = -1; // Handle РїРѕРґРєР»СЋС‡РµРЅРёСЏ MySQL
 
-// Структура хранения данных игрока
+// РЎС‚СЂСѓРєС‚СѓСЂР° С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… РёРіСЂРѕРєР°
 enum E_PLAYERS
 {
 	ORM:ORM_ID,
@@ -25,7 +25,7 @@ enum E_PLAYERS
 	LoginTimer
 };
 
-// Структура диалогов
+// РЎС‚СЂСѓРєС‚СѓСЂР° РґРёР°Р»РѕРіРѕРІ
 enum DIALOGS 
 {
 	Login,
@@ -33,8 +33,8 @@ enum DIALOGS
 };
 
 
-new Player[MAX_PLAYERS][E_PLAYERS]; // Объявим массив игроков
-new MySQL_RACE_CHECK[MAX_PLAYERS]; // Для проверки валидности пользователя при длительных запросах
+new Player[MAX_PLAYERS][E_PLAYERS]; // РћР±СЉСЏРІРёРј РјР°СЃСЃРёРІ РёРіСЂРѕРєРѕРІ
+new MySQL_RACE_CHECK[MAX_PLAYERS]; // Р”Р»СЏ РїСЂРѕРІРµСЂРєРё РІР°Р»РёРґРЅРѕСЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїСЂРё РґР»РёС‚РµР»СЊРЅС‹С… Р·Р°РїСЂРѕСЃР°С…
 
 
 /*====================================================================*/
@@ -51,22 +51,22 @@ forward _KickPlayerDelayed(playerid);
 
 public OnGameModeInit()
 {
-        mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML); // Логирование ошибок MySQL в HTML виде
-        MySQL_Handle = mysql_connect(SQL_CONNECT_PROPS[Host], SQL_CONNECT_PROPS[Login], SQL_CONNECT_PROPS[DataBase], SQL_CONNECT_PROPS[Password]); // Установим соединение с MySQL
+        mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML); // Р›РѕРіРёСЂРѕРІР°РЅРёРµ РѕС€РёР±РѕРє MySQL РІ HTML РІРёРґРµ
+        MySQL_Handle = mysql_connect(SQL_CONNECT_PROPS[Host], SQL_CONNECT_PROPS[Login], SQL_CONNECT_PROPS[DataBase], SQL_CONNECT_PROPS[Password]); // РЈСЃС‚Р°РЅРѕРІРёРј СЃРѕРµРґРёРЅРµРЅРёРµ СЃ MySQL
 	
         return 1;
 }
 
 public OnGameModeExit()
 {
-        for(new p=0; p < MAX_PLAYERS; ++p) // Сбросим данные пользователей в MySQL
+        for(new p=0; p < MAX_PLAYERS; ++p) // РЎР±СЂРѕСЃРёРј РґР°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РІ MySQL
          {
            if(IsPlayerConnected(p) && Player[p][IsLoggedIn] && Player[p][ID] > 0)
             {
-             orm_save(Player[p][ORM_ID]); // Сохранение данных
+             orm_save(Player[p][ORM_ID]); // РЎРѕС…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С…
             }
          }
-        mysql_close(); // Закроем MySQL
+        mysql_close(); // Р—Р°РєСЂРѕРµРј MySQL
 	return 1;
 }
 
@@ -80,12 +80,12 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
-        MySQL_RACE_CHECK[playerid]++; // Установим проверочную переменную
+        MySQL_RACE_CHECK[playerid]++; // РЈСЃС‚Р°РЅРѕРІРёРј РїСЂРѕРІРµСЂРѕС‡РЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ
         for(new E_PLAYERS:e; e < E_PLAYERS; ++e) 
-           Player[playerid][e] = 0; // Сбросим параметры подключившегося пользователя
+           Player[playerid][e] = 0; // РЎР±СЂРѕСЃРёРј РїР°СЂР°РјРµС‚СЂС‹ РїРѕРґРєР»СЋС‡РёРІС€РµРіРѕСЃСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 	GetPlayerName(playerid, Player[playerid][Name], MAX_PLAYER_NAME);
 
-        // Создаем новую структуру запроса
+        // РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂСѓ Р·Р°РїСЂРѕСЃР°
 	new ORM:ormid = Player[playerid][ORM_ID] = orm_create("players", MySQL_Handle);
 	orm_addvar_int(ormid, Player[playerid][ID], "id");
 	orm_addvar_string(ormid, Player[playerid][Name], MAX_PLAYER_NAME, "username");
@@ -94,7 +94,7 @@ public OnPlayerConnect(playerid)
         orm_addvar_string(ormid, Player[playerid][phone], 11, "phone");
 	orm_addvar_int(ormid, Player[playerid][Money], "money");
 	orm_setkey(ormid, "username");
-        // Сделаем запрос в паралельном потоке
+        // РЎРґРµР»Р°РµРј Р·Р°РїСЂРѕСЃ РІ РїР°СЂР°Р»РµР»СЊРЅРѕРј РїРѕС‚РѕРєРµ
 	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, MySQL_RACE_CHECK[playerid]);
 
         //.....
@@ -265,18 +265,18 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
 	{
-	    case DIALOGS[Login]: // Логинимся
+	    case DIALOGS[Login]: // Р›РѕРіРёРЅРёРјСЃСЏ
 	    {
-	        if(!response) return Kick(playerid); // Если отказался, кикнем
-		if(strlen(inputtext) <= 5 or strlen(inputtext) >= 14) // Проверим длинну пароля
-			return ShowPlayerDialog(playerid, DIALOGS[Login], DIALOG_STYLE_PASSWORD, "Ошибка", COLORS_CHAT[Red] "Пароль должен быть не короче 6 символов и не длиньше 16!\n" COLORS_CHAT[White] "Пожалуйста, введите пароль ещё раз!", "Войти", "Отмена");
+	        if(!response) return Kick(playerid); // Р•СЃР»Рё РѕС‚РєР°Р·Р°Р»СЃСЏ, РєРёРєРЅРµРј
+		if(strlen(inputtext) <= 5 or strlen(inputtext) >= 14) // РџСЂРѕРІРµСЂРёРј РґР»РёРЅРЅСѓ РїР°СЂРѕР»СЏ
+			return ShowPlayerDialog(playerid, DIALOGS[Login], DIALOG_STYLE_PASSWORD, "РћС€РёР±РєР°", COLORS_CHAT[Red] "РџР°СЂРѕР»СЊ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅРµ РєРѕСЂРѕС‡Рµ 6 СЃРёРјРІРѕР»РѕРІ Рё РЅРµ РґР»РёРЅСЊС€Рµ 16!\n" COLORS_CHAT[White] "РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ РµС‰С‘ СЂР°Р·!", "Р’РѕР№С‚Рё", "РћС‚РјРµРЅР°");
 
 		new hashed_pass[33];
-		md5(inputtext, hashed_pass); // Получим md5 пароля
+		md5(inputtext, hashed_pass); // РџРѕР»СѓС‡РёРј md5 РїР°СЂРѕР»СЏ
 			
 		if(strcmp(hashed_pass, Player[playerid][Password]) == 0)
 		{
-			// Пароль верный
+			// РџР°СЂРѕР»СЊ РІРµСЂРЅС‹Р№
 			Player[playerid][IsLoggedIn] = true;
 			SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
 			SpawnPlayer(playerid);
@@ -323,41 +323,41 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 
 
 /*=====================================================================*/
-/* Функции мода                                                        */
+/* Р¤СѓРЅРєС†РёРё РјРѕРґР°                                                        */
 /*=====================================================================*/
 
-// Функция при начальной загрузке данных пользователя из базы
+// Р¤СѓРЅРєС†РёСЏ РїСЂРё РЅР°С‡Р°Р»СЊРЅРѕР№ Р·Р°РіСЂСѓР·РєРµ РґР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РёР· Р±Р°Р·С‹
 public OnPlayerDataLoaded(playerid, race_check)
 {
-	if(race_check != MySQL_RACE_CHECK[playerid]) // Проверка валидности пользователя на которого запрашивали данные
+	if(race_check != MySQL_RACE_CHECK[playerid]) // РџСЂРѕРІРµСЂРєР° РІР°Р»РёРґРЅРѕСЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° РєРѕС‚РѕСЂРѕРіРѕ Р·Р°РїСЂР°С€РёРІР°Р»Рё РґР°РЅРЅС‹Рµ
 	    return Kick(playerid);
 	    
 	orm_setkey(Player[playerid][ORM_ID], "id");
 
 
-        // Установим точку взгляда камеры
+        // РЈСЃС‚Р°РЅРѕРІРёРј С‚РѕС‡РєСѓ РІР·РіР»СЏРґР° РєР°РјРµСЂС‹
 	SetPlayerCameraPos(playerid,1678.2035,-1481.4669,110.1527);
 	SetPlayerCameraLookAt(playerid,1614.6501,-1576.7792,88.1527);
 
-        // Поприветствуем игрока
-	new welcome_cap = "Добро пожаловать на сервер " SERVER_NAME "!";
+        // РџРѕРїСЂРёРІРµС‚СЃС‚РІСѓРµРј РёРіСЂРѕРєР°
+	new welcome_cap = "Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РЅР° СЃРµСЂРІРµСЂ " SERVER_NAME "!";
 	SendClientMessage(playerid, COLORS[Yellow], welcome_cap);
 
-	// Проверим результат 
+	// РџСЂРѕРІРµСЂРёРј СЂРµР·СѓР»СЊС‚Р°С‚ 
 	new welcome_text[256];
 	
 	switch(orm_errno(Player[playerid][ORM_ID]))
 	{
-		case ERROR_OK: // Есть регистрация
+		case ERROR_OK: // Р•СЃС‚СЊ СЂРµРіРёСЃС‚СЂР°С†РёСЏ
 		{
-			format(welcome_text, sizeof(welcome_text), COLORS_CHAT[White] welcome_cap "\nВаш ник зарегистрирован\n\nЛогин: " COLORS_CHAT[LimeGreen] "%s\n" COLORS_CHAT[White] "Введите пароль:", Player[playerid][Name]);
-			ShowPlayerDialog(playerid, DIALOGS[Login], DIALOG_STYLE_PASSWORD, COLORS_CHAT[CornflowerBlue] "Авторизация", welcome_text, "Войти", "Отмена");
+			format(welcome_text, sizeof(welcome_text), COLORS_CHAT[White] welcome_cap "\nР’Р°С€ РЅРёРє Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ\n\nР›РѕРіРёРЅ: " COLORS_CHAT[LimeGreen] "%s\n" COLORS_CHAT[White] "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ:", Player[playerid][Name]);
+			ShowPlayerDialog(playerid, DIALOGS[Login], DIALOG_STYLE_PASSWORD, COLORS_CHAT[CornflowerBlue] "РђРІС‚РѕСЂРёР·Р°С†РёСЏ", welcome_text, "Р’РѕР№С‚Рё", "РћС‚РјРµРЅР°");
 			Player[playerid][IsRegistered] = true;
 		}
-		case ERROR_NO_DATA: // Нет регистрации
+		case ERROR_NO_DATA: // РќРµС‚ СЂРµРіРёСЃС‚СЂР°С†РёРё
 		{
-			format(welcome_text, sizeof(welcome_text), COLORS_CHAT[White] welcome_cap "\nЧтобы начать игру вам необходиму пройти регистрацию\n\nВведите пароль для Вашего аккаунта: " COLORS_CHAT[LimeGreen] "%s\n" COLORS_CHAT[White] "\nОн будет запрашиваться каждый раз, когда вы заходите на сервер.\n\n" COLORS_CHAT[LimeGreen] "\tПримечания:\n\t- Пароль может состоять из руских и латинских символов\n\t- Пароль чуствителен к регистру\n\t- Длина пароля от 6-ти до 15-ти символов", Player[playerid][Name]);
-			ShowPlayerDialog(playerid, DIALOGS[Register], DIALOG_STYLE_PASSWORD, COLORS_CHAT[CornflowerBlue] "Регистрация", welcome_text, "Принять", "Отмена");
+			format(welcome_text, sizeof(welcome_text), COLORS_CHAT[White] welcome_cap "\nР§С‚РѕР±С‹ РЅР°С‡Р°С‚СЊ РёРіСЂСѓ РІР°Рј РЅРµРѕР±С…РѕРґРёРјСѓ РїСЂРѕР№С‚Рё СЂРµРіРёСЃС‚СЂР°С†РёСЋ\n\nР’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ РґР»СЏ Р’Р°С€РµРіРѕ Р°РєРєР°СѓРЅС‚Р°: " COLORS_CHAT[LimeGreen] "%s\n" COLORS_CHAT[White] "\nРћРЅ Р±СѓРґРµС‚ Р·Р°РїСЂР°С€РёРІР°С‚СЊСЃСЏ РєР°Р¶РґС‹Р№ СЂР°Р·, РєРѕРіРґР° РІС‹ Р·Р°С…РѕРґРёС‚Рµ РЅР° СЃРµСЂРІРµСЂ.\n\n" COLORS_CHAT[LimeGreen] "\tРџСЂРёРјРµС‡Р°РЅРёСЏ:\n\t- РџР°СЂРѕР»СЊ РјРѕР¶РµС‚ СЃРѕСЃС‚РѕСЏС‚СЊ РёР· СЂСѓСЃРєРёС… Рё Р»Р°С‚РёРЅСЃРєРёС… СЃРёРјРІРѕР»РѕРІ\n\t- РџР°СЂРѕР»СЊ С‡СѓСЃС‚РІРёС‚РµР»РµРЅ Рє СЂРµРіРёСЃС‚СЂСѓ\n\t- Р”Р»РёРЅР° РїР°СЂРѕР»СЏ РѕС‚ 6-С‚Рё РґРѕ 15-С‚Рё СЃРёРјРІРѕР»РѕРІ", Player[playerid][Name]);
+			ShowPlayerDialog(playerid, DIALOGS[Register], DIALOG_STYLE_PASSWORD, COLORS_CHAT[CornflowerBlue] "Р РµРіРёСЃС‚СЂР°С†РёСЏ", welcome_text, "РџСЂРёРЅСЏС‚СЊ", "РћС‚РјРµРЅР°");
 			Player[playerid][IsRegistered] = false;
 		}
 	}
@@ -366,7 +366,7 @@ public OnPlayerDataLoaded(playerid, race_check)
 
 KickAndQuit(playerid)
 {
-	SendClientMessage(playerid, 0xFF6347AA, "Введите /q (/quit) чтобы выйти");	
+	SendClientMessage(playerid, 0xFF6347AA, "Р’РІРµРґРёС‚Рµ /q (/quit) С‡С‚РѕР±С‹ РІС‹Р№С‚Рё");	
 	Kick(playerid);
 	return 1;
 }
