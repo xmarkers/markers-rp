@@ -62,17 +62,17 @@ public OnGameModeInit()
 
 public OnGameModeExit()
 {
-        // Сбросим данные пользователей в MySQL
-        for(new p=0; p < MAX_PLAYERS; ++p)
-         {
-           if(IsPlayerConnected(p) && Player[p][IsLoggedIn] && Player[p][ID] > 0)
-            {
-             // Сохранение данных
-             orm_save(Player[p][ORM_ID]); 
-            }
-         }
+	// Сбросим данные пользователей в MySQL
+	for(new p=0; p < MAX_PLAYERS; ++p)
+	{
+		if(IsPlayerConnected(p) && Player[p][IsLoggedIn] && Player[p][ID] > 0)
+		{
+		// Сохранение данных
+		orm_save(Player[p][ORM_ID]); 
+		}
+	}
 	// Закроем MySQL
-        mysql_close();
+	mysql_close();
 	return 1;
 }
 
@@ -86,24 +86,25 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
-        MySQL_RACE_CHECK[playerid]++; // Установим проверочную переменную
-        for(new E_PLAYERS:e; e < E_PLAYERS; ++e) 
-           Player[playerid][e] = 0; // Сбросим параметры подключившегося пользователя
+	MySQL_RACE_CHECK[playerid]++; // Установим проверочную переменную
+	for(new E_PLAYERS:e; e < E_PLAYERS; ++e) 
+		Player[playerid][e] = 0; // Сбросим параметры подключившегося пользователя
+
 	GetPlayerName(playerid, Player[playerid][Name], MAX_PLAYER_NAME);
 
-        // Создаем новую структуру запроса
+	// Создаем новую структуру запроса
 	new ORM:ormid = Player[playerid][ORM_ID] = orm_create("players", MySQL_Handle);
 	orm_addvar_int(ormid, Player[playerid][ID], "id");
 	orm_addvar_string(ormid, Player[playerid][Name], MAX_PLAYER_NAME, "username");
 	orm_addvar_string(ormid, Player[playerid][Password], 33, "password");
-        orm_addvar_string(ormid, Player[playerid][email], 100, "email");
-        orm_addvar_string(ormid, Player[playerid][phone], 11, "phone");
+	orm_addvar_string(ormid, Player[playerid][email], 100, "email");
+	orm_addvar_string(ormid, Player[playerid][phone], 11, "phone");
 	orm_addvar_int(ormid, Player[playerid][Money], "money");
 	orm_setkey(ormid, "username");
-        // Сделаем запрос в паралельном потоке
+	// Сделаем запрос в паралельном потоке
 	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, MySQL_RACE_CHECK[playerid]);
 
-        //.....
+	//.....
 	return 1;
 }
 
@@ -357,13 +358,13 @@ public OnPlayerDataLoaded(playerid, race_check)
 	{
 		case ERROR_OK: // Есть регистрация
 		{
-			format(welcome_text, sizeof(welcome_text), "&s&s\nВаш ник зарегистрирован\n\nЛогин: %s%s\n{FFFFFF}Введите пароль:", C_COLOR_WHITE, welcome_cap, C_COLOR_LIMEGREEN, Player[playerid][Name], C_COLOR_WHITE);
+			format(welcome_text, sizeof(welcome_text), C_COLOR_WHITE "%s\nВаш ник зарегистрирован\n\nЛогин: " C_COLOR_LIMEGREEN "%s\n" C_COLOR_WHITE "Введите пароль:", welcome_cap, Player[playerid][Name]);
 			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Авторизация", welcome_text, "Войти", "Отмена");
 			Player[playerid][IsRegistered] = true;
 		}
 		case ERROR_NO_DATA: // Нет регистрации
 		{
-			format(welcome_text, sizeof(welcome_text), C_COLOR_WHITE+welcome_cap+"\nЧтобы начать игру вам необходиму пройти регистрацию\n\nВведите пароль для Вашего аккаунта: "+C_COLOR_LIMEGREEN+"%s\n"+C_COLOR_WHITE+"\nОн будет запрашиваться каждый раз, когда вы заходите на сервер.\n\n"+C_COLOR_LIMEGREEN+"\tПримечания:\n\t- Пароль может состоять из руских и латинских символов\n\t- Пароль чуствителен к регистру\n\t- Длина пароля от 6-ти до 15-ти символов", Player[playerid][Name]);
+			format(welcome_text, sizeof(welcome_text), C_COLOR_WHITE "%s\nЧтобы начать игру вам необходиму пройти регистрацию\n\nВведите пароль для Вашего аккаунта: " C_COLOR_LIMEGREEN "%s\n" C_COLOR_WHITE "\nОн будет запрашиваться каждый раз, когда вы заходите на сервер.\n\n" C_COLOR_LIMEGREEN "\tПримечания:\n\t- Пароль может состоять из руских и латинских символов\n\t- Пароль чуствителен к регистру\n\t- Длина пароля от 6-ти до 15-ти символов", welcome_cap, Player[playerid][Name]);
 			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Регистрация", welcome_text, "Принять", "Отмена");
 			Player[playerid][IsRegistered] = false;
 		}
