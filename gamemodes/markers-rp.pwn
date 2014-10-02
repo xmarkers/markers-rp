@@ -23,7 +23,12 @@ enum E_PLAYERS
 	bool:IsLoggedIn,
 	bool:IsRegistered,
 	LoginAttempts,
-	LoginTimer
+	LoginTimer,
+	Level,
+	DateReg,
+	Heal,
+	Reg_IP,
+
 };
 
 // Структура диалогов
@@ -45,6 +50,7 @@ new MySQL_RACE_CHECK[MAX_PLAYERS]; // Для проверки валидности пользователя при д
 forward OnPlayerDataLoaded(playerid, race_check);
 forward OnPlayerRegister(playerid);
 forward _KickPlayerDelayed(playerid);
+forward OnPlayerRegister(playerid);
 
 
 /*====================================================================*/
@@ -80,9 +86,8 @@ public OnGameModeExit()
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	SetPlayerPos(playerid, 1958.3783, 1343.1572, 15.3746);
-	SetPlayerCameraPos(playerid, 1958.3783, 1343.1572, 15.3746);
-	SetPlayerCameraLookAt(playerid, 1958.3783, 1343.1572, 15.3746);
+	SetPlayerCameraPos(playerid,1678.2035,-1481.4669,110.1527);
+	SetPlayerCameraLookAt(playerid,1614.6501,-1576.7792,88.1527);
 	return 1;
 }
 
@@ -289,6 +294,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Player[playerid][IsLoggedIn] = true;
 			SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
 			SpawnPlayer(playerid);
+			Welcome(playerid);
 		}
 		else
 		{
@@ -310,11 +316,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		if(!response)
 			return KickAndQuit(playerid);
 		if(strlen(inputtext) <= 5 || strlen(inputtext) >= 14) // Проверим длинну пароля
-			return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Регистрация", C_COLOR_RED "Пароль должен быть не короче 6 символов и не длинней 16 символов!\n" C_COLOR_WHITE "Пожалуйста, введите пароль ещё раз!", "Регистрация", "Отмена");
+			return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Регистрация", C_COLOR_RED "Пароль должен быть не короче 6 символов и не длинней 16 символов!\n" C_COLOR_WHITE "Пожалуйста, введите пароль ещё раз!", "Далее", "Отмена");
 
 		md5(inputtext, Player[playerid][Password]); // Получим md5 пароля
+		
+		// Установим стартовые значения
+		Player[playerid][Money] = 200;
+		PlayerInfo[playerid][pLevel] = 1;
+		PlayerInfo[playerid][pHeal] = 90;
+		// Получим текущий IP
+		GetPlayerIp(playerid, PlayerInfo[playerid][Reg_IP], 15);
 		// Сохраним профиль
 		orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
+
 	    }
 	    
 	    default:
@@ -359,16 +373,32 @@ public OnPlayerDataLoaded(playerid, race_check)
 		case ERROR_OK: // Есть регистрация
 		{
 			format(welcome_text, sizeof(welcome_text), C_COLOR_WHITE "%s\nВаш ник зарегистрирован\n\nЛогин: " C_COLOR_LIMEGREEN "%s\n" C_COLOR_WHITE "Введите пароль:", welcome_cap, Player[playerid][Name]);
-			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Авторизация", welcome_text, "Войти", "Отмена");
+			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Авторизация", welcome_text, "Вход", "Отмена");
 			Player[playerid][IsRegistered] = true;
 		}
 		case ERROR_NO_DATA: // Нет регистрации
 		{
 			format(welcome_text, sizeof(welcome_text), C_COLOR_WHITE "%s\nЧтобы начать игру вам необходиму пройти регистрацию\n\nУкажите пароль для Вашего аккаунта: " C_COLOR_LIMEGREEN "%s\n" C_COLOR_WHITE "\nОн будет запрашиваться каждый раз, когда вы заходите на сервер.\n\n" C_COLOR_LIMEGREEN "\tПримечания:\n\t- Пароль может состоять из руских и латинских символов\n\t- Пароль чуствителен к регистру\n\t- Длина пароля от 6-ти до 15-ти символов", welcome_cap, Player[playerid][Name]);
-			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Регистрация", welcome_text, "Принять", "Отмена");
+			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, C_COLOR_CORNFLOWERBLUE "Регистрация", welcome_text, "Далее", "Отмена");
 			Player[playerid][IsRegistered] = false;
 		}
 	}
+	return 1;
+}
+
+public OnPlayerRegister(playerid)
+{
+	//ShowPlayerDialog(playerid, DIALOG_UNUSED, DIALOG_STYLE_MSGBOX, "Registration", "Account successfully registered, you have been automatically logged in.", "Okay", "");
+	Player[playerid][IsLoggedIn] = true;
+	Player[playerid][IsRegistered] = true;
+
+	// Дадим бабок
+	ResetPlayerMoney(playerid);
+	GivePlayerMoney(playerid, Player[playerid][Money]);
+
+	//SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
+	//SpawnPlayer(playerid);
+	Welcome(playerid);
 	return 1;
 }
 
@@ -385,9 +415,24 @@ DelayedKick(playerid, time=500)
 	return 1;
 }
 
+Welcome(playerid)
+{
+	new welcome_msg;
+	format(welcome_msg, sizeof(welcome_msg), "~w~Welcome ~n~~b~   %s", Player[playerid][Name]);
+	GameTextForPlayer(playerid, welcome_msg, 5000, 1);
+}
+
 public _KickPlayerDelayed(playerid)
 {
 	KickAndQuit(playerid);
+	return 1;
+}
+
+CMD:gmx(playerid, params[])
+{
+	SendClientMessageToAll(COLOR_BLUE, "{FFFFFF}Сервер возобновит работу в течение минуты...");
+	GameTextForPlayer(playerid, "~r~RE~g~STARTING", 2000, 5);
+	GameModeExit();
 	return 1;
 }
 
