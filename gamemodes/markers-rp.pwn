@@ -1,11 +1,12 @@
 #include <a_samp>
-#include <markers>
+#include <markers-consts>
 #include <a_mysql>
 #include <sscanf2>
 #include <zcmd>
 #include <Encrypt>
 
-new MySQL_Handle = -1; // Handle подключения MySQL
+// Handle подключения MySQL
+new MySQL_Handle = -1; 
 
 // Структура хранения данных игрока
 enum E_PLAYERS
@@ -290,11 +291,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		else
 		{
-		    Player[playerid][LoginAttempts]++;
-		    if(Player[playerid][LoginAttempts] >= 3)
-		    {
+			Player[playerid][LoginAttempts]++;
+			if(Player[playerid][LoginAttempts] >= 3)
+			{
 				ShowPlayerDialog(playerid, DIALOG_UNUSED, DIALOG_STYLE_MSGBOX, "Login", C_COLOR_RED "You have mistyped your password too often (3 times).", "Okay", "");
-		        DelayedKick(playerid);
+				DelayedKick(playerid);
 			}
 			else
 			    ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", C_COLOR_RED "Wrong password!\n" C_COLOR_WHITE "Please enter your password in the field below:", "Login", "Abort");
@@ -303,16 +304,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	    
 	    case DIALOG_REGISTER:
 	    {
-	        if(!response)
-	            return Kick(playerid);
-	            
-            if(strlen(inputtext) <= 5)
-				return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registration",
-					C_COLOR_RED "Your password must be longer than 5 characters!\n" C_COLOR_WHITE "Please enter your password in the field below:",
-					"Register", "Abort");
+		if(!response)
+			return Kick(playerid);
+		if(strlen(inputtext) <= 5)
+			return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registration", C_COLOR_RED "Your password must be longer than 5 characters!\n" C_COLOR_WHITE "Please enter your password in the field below:", "Register", "Abort");
 
-			//WP_Hash(Player[playerid][Password], 129, inputtext);
-			orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
+		md5(inputtext, Player[playerid][Password]); // Получим md5 пароля
+		// Сохраним профиль
+		orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
 	    }
 	    
 	    default:
@@ -350,7 +349,7 @@ public OnPlayerDataLoaded(playerid, race_check)
 	SendClientMessage(playerid, COLOR_YELLOW, welcome_cap);
 
 	// Проверим результат 
-	new welcome_text[256];
+	new welcome_text[255];
 	
 	switch(orm_errno(Player[playerid][ORM_ID]))
 	{
@@ -372,7 +371,7 @@ public OnPlayerDataLoaded(playerid, race_check)
 
 KickAndQuit(playerid)
 {
-	SendClientMessage(playerid, 0xFF6347AA, "Введите /q (/quit) чтобы выйти");	
+	SendClientMessage(playerid, COLOR_TOMATO, "Введите /q (/quit) чтобы выйти");	
 	Kick(playerid);
 	return 1;
 }
