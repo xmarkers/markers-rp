@@ -4,7 +4,7 @@
 #define SERVER_NAME  "markers Role Play"
 
 // Структура подключения к SQL
-#define SQL_HOST  "localhost"
+#define SQL_HOST  "127.0.0.1"
 #define SQL_USER  "root"
 #define SQL_PASSWORD  ""
 #define SQL_DB  "samp"
