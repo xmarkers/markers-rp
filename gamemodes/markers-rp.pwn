@@ -1,5 +1,7 @@
 #include <a_samp>
+//#include <a_npc>
 #include <markers-consts>
+#include <markers-mapping>
 #include <a_mysql>
 #include <sscanf2>
 #include <zcmd>
@@ -26,8 +28,10 @@ enum E_PLAYERS
 	LoginTimer,
 	Level,
 	DateReg,
-	Heal,
+	HP,
+	Wanted,
 	Reg_IP,
+	Skin,
 
 };
 
@@ -59,10 +63,16 @@ forward OnPlayerRegister(playerid);
 
 public OnGameModeInit()
 {
+	LoadMapping_GameStart();
+
 	// Логирование ошибок MySQL в HTML виде
 	mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML);
 	// Установим соединение с MySQL
 	MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
+
+	AddStaticVehicleEx(538,2285.0352,-1297.1613,25.5006,359.9906,132,132,10);  // Поезд
+	AddStaticVehicleEx(538,2277.5952,-1465.9432,24.4232,349.3316,1,1,10);  // Поезд 2
+	AddStaticVehicleEx(538,2229.0730,-1597.2704,18.4348,337.3030,252,252,10);  // поезд 3
 
 	print("markers-rp: Loaded!");
 	return 1;
@@ -122,6 +132,11 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
+	SetPlayerPos(playerid,1760.7921,-1900.1312,13.5636);
+	SetPlayerFacingAngle(playerid,270.02);
+	SetPlayerInterior(playerid,0);
+	SetPlayerVirtualWorld(playerid, 0);
+
 	return 1;
 }
 
@@ -292,8 +307,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			// Пароль верный
 			Player[playerid][IsLoggedIn] = true;
-			SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
-			SpawnPlayer(playerid);
+			//SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
+			//SpawnPlayer(playerid);
 			Welcome(playerid);
 		}
 		else
@@ -322,10 +337,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		
 		// Установим стартовые значения
 		Player[playerid][Money] = 200;
-		PlayerInfo[playerid][pLevel] = 1;
-		PlayerInfo[playerid][pHeal] = 90;
+		Player[playerid][Level] = 1;
+		Player[playerid][HP] = 90;
 		// Получим текущий IP
-		GetPlayerIp(playerid, PlayerInfo[playerid][Reg_IP], 15);
+		GetPlayerIp(playerid, Player[playerid][Reg_IP], 15);
 		// Сохраним профиль
 		orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
 
@@ -344,6 +359,14 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 }
 
 
+public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
+{
+	new string[256];
+	SetPlayerPosFindZ(playerid, fX, fY, fZ+10);
+	format(string, sizeof(string), "Вы успешно телепортировались. Координаты: X - %d Y - %d Z - %d",fX, fY, fZ);
+	SendClientMessage(playerid,COLOR_WHITE,string);
+	return 1;
+}
 
 /*=====================================================================*/
 /* Функции мода                                                        */
@@ -392,12 +415,6 @@ public OnPlayerRegister(playerid)
 	Player[playerid][IsLoggedIn] = true;
 	Player[playerid][IsRegistered] = true;
 
-	// Дадим бабок
-	ResetPlayerMoney(playerid);
-	GivePlayerMoney(playerid, Player[playerid][Money]);
-
-	//SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
-	//SpawnPlayer(playerid);
 	Welcome(playerid);
 	return 1;
 }
@@ -417,9 +434,25 @@ DelayedKick(playerid, time=500)
 
 Welcome(playerid)
 {
-	new welcome_msg;
+        // Удалим объекты для игрока
+	RemoveBuldsForPlayer(playerid);
+
+	new welcome_msg[50];
 	format(welcome_msg, sizeof(welcome_msg), "~w~Welcome ~n~~b~   %s", Player[playerid][Name]);
 	GameTextForPlayer(playerid, welcome_msg, 5000, 1);
+
+	// Дадим бабок
+	ResetPlayerMoney(playerid);
+	GivePlayerMoney(playerid, Player[playerid][Money]);
+
+	//SetPlayerHealth(playerid, Player[playerid][HP]);
+	SetPlayerHealth(playerid, 100);
+	ApplyAnimation(playerid, "BOMBER", "null",0.0,0,0,0,0,0);
+	StopAudioStreamForPlayer(playerid);
+	SetPlayerWantedLevel(playerid, Player[playerid][Wanted]);
+	//SetPlayerSkills(playerid);
+
+	SpawnPlayer(playerid);
 }
 
 public _KickPlayerDelayed(playerid)
@@ -434,6 +467,33 @@ CMD:gmx(playerid, params[])
 	GameTextForPlayer(playerid, "~r~RE~g~STARTING", 2000, 5);
 	GameModeExit();
 	return 1;
+}
+
+CMD:veh(playerid, params[])
+{
+
+	new car_id, Color_1, Color_2;
+	if (sscanf(params, "ddd", car_id, Color_1, Color_2))
+		return SendClientMessage(playerid, COLOR_WHITE, "Используйте:/veh [carid] [цвет1] [цвет2]");
+	if (car_id < 400 || car_id > 611) 
+		return SendClientMessage(playerid, COLOR_GREY, "Номер машины не может быть меньше 400 и больше чем 611!");
+	if (Color_1 < 0 || Color_1 > 126 || Color_2 < 0 || Color_2 > 126)
+		return SendClientMessage(playerid, COLOR_GREY, "Номер цвета не может быть меньше 0 и больше 126!");
+
+	new Float:Xx,Float:Yy,Float:Zz;
+	GetPlayerPos(playerid, Xx,Yy,Zz);
+	CreateVehicle(car_id, Xx,Yy,Zz, 0.0, Color_1, Color_2, 60000);
+
+//FP_PPVAC(playerid, createdvehicles[playerid], 0);
+//CreatedCars[CreatedCar] = createdvehicles[playerid];
+//SetVehicleParamsEx(createdvehicles[playerid],VEHICLE_PARAMS_ON,VEHICLE_PARAMS_ON,alarm,doors,bonnet,boot,objective);
+//SpawnedCar ++;
+//VehicleFuel[createdvehicles[playerid]] = 120;
+//zavodis[createdvehicles[playerid]] = true;
+//LinkVehicleToInterior(createdvehicles[playerid], intt);
+//RepairVehicle(GetPlayerVehicleID(playerid));return true;
+	return 1;
+
 }
 
 main(){}

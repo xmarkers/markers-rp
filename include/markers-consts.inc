@@ -1,4 +1,4 @@
-#pragma library markers
+#pragma library markers-consts
 
 // Название сервера
 #define SERVER_NAME  "markers Role Play"
