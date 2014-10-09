@@ -497,7 +497,7 @@ CMD:veh(playerid, params[])
 
 }
 
-CMD:givegun(params[])
+CMD:givegun(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
 	new player, gunid, ammo;
@@ -510,14 +510,14 @@ CMD:givegun(params[])
 		return SendClientMessage(playerid, COLOR_GREY, "ID оружия может быть от 1 до 54.");
 	if (ammo < 1 && ammo > 10000)
 		return SendClientMessage(playerid, COLOR_GREY, "Кол-во патронов должно быть от 1 до 10000.");
-	for (i=0; i<6; i++) {
-		if (gunid == i) return SendClientMessage(playerid, COLOR_GREY, "Это оружие запрещено на сервере!");
+	for (new i=0; i<sizeof(deleted_weapons); i++) {
+		if (gunid == deleted_weapons[i]) return SendClientMessage(playerid, COLOR_GREY, "Это оружие запрещено на сервере!");
 	}
 	GivePlayerWeapon(playerid, gunid, ammo);
 	return 1;
 }
 
-CMD:kick(params[])
+CMD:kick(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
 	new bastard, reason[50], msg2all[100], msg2btrd[100];
