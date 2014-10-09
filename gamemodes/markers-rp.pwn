@@ -474,11 +474,11 @@ CMD:veh(playerid, params[])
 
 	new car_id, Color_1, Color_2;
 	if (sscanf(params, "ddd", car_id, Color_1, Color_2))
-		return SendClientMessage(playerid, COLOR_WHITE, "Используйте:/veh [carid] [цвет1] [цвет2]");
+		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /veh [carid] [цвет1] [цвет2]");
 	if (car_id < 400 || car_id > 611) 
-		return SendClientMessage(playerid, COLOR_GREY, "Номер машины не может быть меньше 400 и больше чем 611!");
+		return SendClientMessage(playerid, COLOR_GREY, "Номер машины может быть от 400 до 611!");
 	if (Color_1 < 0 || Color_1 > 126 || Color_2 < 0 || Color_2 > 126)
-		return SendClientMessage(playerid, COLOR_GREY, "Номер цвета не может быть меньше 0 и больше 126!");
+		return SendClientMessage(playerid, COLOR_GREY, "Номер цвета может быть от 0 до 126.");
 
 	new Float:Xx,Float:Yy,Float:Zz;
 	GetPlayerPos(playerid, Xx,Yy,Zz);
@@ -494,6 +494,22 @@ CMD:veh(playerid, params[])
 //RepairVehicle(GetPlayerVehicleID(playerid));return true;
 	return 1;
 
+}
+
+CMD:givegun(playerid, params[])
+{
+	new gunid, ammo;
+	if (sscanf(params, "dd", gunid, ammo))
+		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /givegun [ID оружия] [кол-во патронов]");
+	if (gunid < 1 && gunid > 54)
+		return SendClientMessage(playerid, COLOR_GREY, "ID оружия может быть от 1 до 54.");
+	if (ammo < 1 && ammo > 10000)
+		return SendClientMessage(playerid, COLOR_GREY, "Кол-во патронов должно быть от 1 до 10000.");
+	for (i=0; i<6; i++) {
+		if (gunid == i) return SendClientMessage(playerid, COLOR_GREY, "Это оружие запрещено на сервере!");
+	}
+	GivePlayerWeapon(playerid, gunid, ammo);
+	return 1;
 }
 
 main(){}

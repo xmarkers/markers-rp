@@ -29,3 +29,14 @@
 #define COLOR_LIGHTBLUE 0x33CCFFAA
 #define COLOR_TOMATO 0xFF6347AA
 #define COLOR_BLUE 0x0000FFAA
+
+// Список ID запрещённого оружия
+new deleted_weapons[6] =
+{
+	39,
+	40,
+	35,
+	36,
+	37,
+	38
+}
