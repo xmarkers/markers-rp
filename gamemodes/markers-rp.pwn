@@ -463,15 +463,16 @@ public _KickPlayerDelayed(playerid)
 
 CMD:gmx(playerid, params[])
 {
+	if (!Player[playerid][IsLoggedIn]) return 1;
 	SendClientMessageToAll(COLOR_BLUE, "{FFFFFF}Сервер возобновит работу в течение минуты...");
-	GameTextForPlayer(playerid, "~r~RE:~g~STARTING", 2000, 5);
+	GameTextForPlayer(playerid, "~r~RE~g~STARTING", 2000, 5);
 	GameModeExit();
 	return 1;
 }
 
 CMD:veh(playerid, params[])
 {
-
+	if (!Player[playerid][IsLoggedIn]) return 1;
 	new car_id, Color_1, Color_2;
 	if (sscanf(params, "ddd", car_id, Color_1, Color_2))
 		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /veh [carid] [цвет1] [цвет2]");
@@ -496,11 +497,15 @@ CMD:veh(playerid, params[])
 
 }
 
-CMD:givegun(playerid, params[])
+CMD:givegun(params[])
 {
-	new gunid, ammo;
-	if (sscanf(params, "dd", gunid, ammo))
-		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /givegun [ID оружия] [кол-во патронов]");
+	if (!Player[playerid][IsLoggedIn]) return 1;
+	new player, gunid, ammo;
+	if (sscanf(params, "rdd", player, gunid, ammo))
+		if (sscanf(params, "dd", gunid, ammo))
+			return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /givegun [ID оружия] [кол-во патронов]");
+	if (player == INVALID_PLAYER_ID)
+		return SendClientMessage(playerid, COLOR_GREY, "Игрока с таким ID не существует!");
 	if (gunid < 1 && gunid > 54)
 		return SendClientMessage(playerid, COLOR_GREY, "ID оружия может быть от 1 до 54.");
 	if (ammo < 1 && ammo > 10000)
@@ -509,6 +514,24 @@ CMD:givegun(playerid, params[])
 		if (gunid == i) return SendClientMessage(playerid, COLOR_GREY, "Это оружие запрещено на сервере!");
 	}
 	GivePlayerWeapon(playerid, gunid, ammo);
+	return 1;
+}
+
+CMD:kick(params[])
+{
+	if (!Player[playerid][IsLoggedIn]) return 1;
+	new bastard, reason[50], msg2all[100], msg2btrd[100];
+	if (sscanf(params, "rs", bastard, reason))
+		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /kick [ID игрока] {Причина}");
+	if (sscanf(params, "r", bastard)) {
+		reason = "[причина не указана]";
+		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /kick [ID игрока] {Причина}");
+	}
+	format(msg2all, sizeof(msg2all), "Администратор %s кикнул игрока %s. Причина: %s", Player[playerid][Name], Player[bastard][Name], reason);
+	SendClientMessageToAll(COLOR_TOMATO, msg2all);
+	format(msg2btrd, sizeof(msg2btrd), "Вас кикнул администратор %s. Причина: %s", Player[playerid][Name], reason);
+	SendClientMessage(bastard, COLOR_TOMATO, msg2btrd);
+	KickAndQuit(bastard);
 	return 1;
 }
 
