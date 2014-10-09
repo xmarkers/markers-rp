@@ -132,10 +132,19 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
+	if (!Player[playerid][IsLoggedIn])
+	{
+		ShowPlayerDialog(playerid, DIALOG_UNUSED, DIALOG_STYLE_MSGBOX, "Ошибка", C_COLOR_WHITE "Вы должны быть зарегистрированы и должны войти в систему...", "", "");
+		KickAndQuit(playerid);
+	}
 	SetPlayerPos(playerid,1760.7921,-1900.1312,13.5636);
 	SetPlayerFacingAngle(playerid,270.02);
 	SetPlayerInterior(playerid,0);
 	SetPlayerVirtualWorld(playerid, 0);
+
+	new welcome_msg[50];
+	format(welcome_msg, sizeof(welcome_msg), "~w~Welcome ~n~~b~   %s", Player[playerid][Name]);
+	GameTextForPlayer(playerid, welcome_msg, 5000, 1);
 
 	return 1;
 }
@@ -437,22 +446,39 @@ Welcome(playerid)
         // Удалим объекты для игрока
 	RemoveBuldsForPlayer(playerid);
 
-	new welcome_msg[50];
-	format(welcome_msg, sizeof(welcome_msg), "~w~Welcome ~n~~b~   %s", Player[playerid][Name]);
-	GameTextForPlayer(playerid, welcome_msg, 5000, 1);
-
 	// Дадим бабок
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid, Player[playerid][Money]);
 
 	//SetPlayerHealth(playerid, Player[playerid][HP]);
 	SetPlayerHealth(playerid, 100);
+	PreloadAnimLib(playerid,"BOMBER");
+	PreloadAnimLib(playerid,"RAPPING");
+	PreloadAnimLib(playerid,"SHOP");
+	PreloadAnimLib(playerid,"BEACH");
+	PreloadAnimLib(playerid,"SMOKING");
+	PreloadAnimLib(playerid,"FOOD");
+	PreloadAnimLib(playerid,"ON_LOOKERS");
+	PreloadAnimLib(playerid,"DEALER");
+	PreloadAnimLib(playerid,"CRACK");
+	PreloadAnimLib(playerid,"CARRY");
+	PreloadAnimLib(playerid,"COP_AMBIENT");
+	PreloadAnimLib(playerid,"PARK");
+	PreloadAnimLib(playerid,"INT_HOUSE");
+	PreloadAnimLib(playerid,"FOOD");
+	PreloadAnimLib(playerid,"CRIB");
+	PreloadAnimLib(playerid,"ROB_BANK");
+	PreloadAnimLib(playerid,"JST_BUISNESS");
+	PreloadAnimLib(playerid,"PED");
+	PreloadAnimLib(playerid,"OTB");
 	ApplyAnimation(playerid, "BOMBER", "null",0.0,0,0,0,0,0);
 	StopAudioStreamForPlayer(playerid);
 	SetPlayerWantedLevel(playerid, Player[playerid][Wanted]);
 	//SetPlayerSkills(playerid);
 
+	SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
 	SpawnPlayer(playerid);
+
 }
 
 public _KickPlayerDelayed(playerid)
@@ -461,11 +487,16 @@ public _KickPlayerDelayed(playerid)
 	return 1;
 }
 
+PreloadAnimLib(playerid, animlib[])
+{
+	ApplyAnimation(playerid,animlib,"null",0.0,0,0,0,0,0);
+}
+
 CMD:gmx(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
 	SendClientMessageToAll(COLOR_BLUE, "{FFFFFF}Сервер возобновит работу в течение минуты...");
-	GameTextForPlayer(playerid, "~r~RE~g~STARTING", 2000, 5);
+	GameTextForPlayer(playerid, "~r~RE:~g~STARTING", 2000, 5);
 	GameModeExit();
 	return 1;
 }
