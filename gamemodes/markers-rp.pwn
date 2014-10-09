@@ -464,7 +464,7 @@ public _KickPlayerDelayed(playerid)
 CMD:gmx(playerid, params[])
 {
 	SendClientMessageToAll(COLOR_BLUE, "{FFFFFF}—ервер возобновит работу в течение минуты...");
-	GameTextForPlayer(playerid, "~r~RE~g~STARTING", 2000, 5);
+	GameTextForPlayer(playerid, "~r~RE:~g~STARTING", 2000, 5);
 	GameModeExit();
 	return 1;
 }
