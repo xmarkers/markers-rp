@@ -549,6 +549,16 @@ CMD:givegun(playerid, params[])
 	return 1;
 }
 
+CMD:time(playerid)
+{
+	if (!Player[playerid][IsLoggedIn]) return 1;
+	new timeNow[20] = date(gettime(), "%dd.%mm.%yyyy %hh:%ii%ss");
+	format(timeNow, sizeof(timeNow), "Текущее время - %s.", timeNow);
+	SendClientMessage(playerid, COLOR_YELLOW, timeNow);
+	print(timeNow);
+	return 1;
+}
+
 CMD:kick(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
