@@ -1,3 +1,13 @@
+AntiDeAMX()
+{
+ new a[][] =
+ {
+  "Unarmed (Fist)",
+  "Brass K"
+ };
+ #pragma unused a
+}
+
 #include <a_samp>
 //#include <a_npc>
 #include <markers-consts>
@@ -17,6 +27,7 @@ enum E_PLAYERS
 	ORM:ORM_ID,
 	
 	ID,
+	dbID,
 	Name[MAX_PLAYER_NAME],
 	email[100],
 	phone[11],
@@ -30,10 +41,21 @@ enum E_PLAYERS
 	Level,
 	DateReg,
 	HP,
+	Armour,
+	Admin,
+	Frac,
+	FracLVL,
+	FracSkin,
 	Wanted,
 	Reg_IP,
 	Skin,
-
+	BanEnd,
+	House,
+	Car,
+	CarKeys,
+	Bank,
+	Business,
+	
 };
 
 // Структура диалогов
@@ -64,6 +86,7 @@ forward OnPlayerRegister(playerid);
 
 public OnGameModeInit()
 {
+	AntiDeAMX();
 	LoadMapping_GameStart();
 
 	// Логирование ошибок MySQL в HTML виде
@@ -71,11 +94,7 @@ public OnGameModeInit()
 	// Установим соединение с MySQL
 	MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
 
-	AddStaticVehicleEx(538,2285.0352,-1297.1613,25.5006,359.9906,132,132,10);  // Поезд
-	AddStaticVehicleEx(538,2277.5952,-1465.9432,24.4232,349.3316,1,1,10);  // Поезд 2
-	AddStaticVehicleEx(538,2229.0730,-1597.2704,18.4348,337.3030,252,252,10);  // поезд 3
-
-	print("markers-rp: Loaded!");
+	print("Markers-RP: Loaded!");
 	return 1;
 }
 
@@ -113,11 +132,13 @@ public OnPlayerConnect(playerid)
 	// Создаем новую структуру запроса
 	new ORM:ormid = Player[playerid][ORM_ID] = orm_create("players", MySQL_Handle);
 	orm_addvar_int(ormid, Player[playerid][ID], "id");
+	mysql_escape_string(Player[playerid][Name], Player[playerid][Name], MySQL, 128);
 	orm_addvar_string(ormid, Player[playerid][Name], MAX_PLAYER_NAME, "username");
 	orm_addvar_string(ormid, Player[playerid][Password], 33, "password");
 	orm_addvar_string(ormid, Player[playerid][email], 100, "email");
 	orm_addvar_string(ormid, Player[playerid][phone], 11, "phone");
 	orm_addvar_int(ormid, Player[playerid][Money], "money");
+	orm_addvar_int(ormid, Player[playerid][BanEnd], "banend");
 	orm_setkey(ormid, "username");
 	// Сделаем запрос в паралельном потоке
 	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, MySQL_RACE_CHECK[playerid]);
@@ -352,6 +373,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		// Получим текущий IP
 		GetPlayerIp(playerid, Player[playerid][Reg_IP], 15);
 		// Сохраним профиль
+		mysql_escape_string(Player[playerid][email], Player[playerid][email], MySQL, 128); // Обфускация
+		mysql_escape_string(Player[playerid][phone], Player[playerid][phone], MySQL, 128); // Обфускация
 		orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
 
 	    }
@@ -583,12 +606,13 @@ CMD:ban(playerid, params[])
 	new bastard, day, reason[50], msg2all[100], msg2btrd[100];
 	if (sscanf(params, "rds", bastard, days, reason))
 		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /ban [ID] [Кол-во дней] [Причина]");
-	new uTimeNow = gettime(), uTimeBanQuit = gettime() + days*24*60;
-	new timeNow[20], timeBanQuit[20];
-	timeBanQuit = date(uTimeBanQuit, "%dd.%mm.%yyyy %hh:%ii%ss");
-	format(msg2all, sizeof(msg2all), "Администратор %s забанил игрока %s до %s. Причина: '%s'.", Player[playerid][Name], Player[bastard][Name], timeBanQuit, reason);
+	new uTimeNow = gettime(), uTimeBanEnd = gettime() + days*24*60;
+	Player[bastard][BanEnd] = uTimeBanEnd;
+	new timeNow[20], timeBanEnd[20];
+	timeBanEnd = date(uTimeBanEnd, "%dd.%mm.%yyyy %hh:%ii%ss");
+	format(msg2all, sizeof(msg2all), "Администратор %s забанил игрока %s до %s. Причина: '%s'.", Player[playerid][Name], Player[bastard][Name], timeBanEnd, reason);
 	SendClientMessageToAll(COLOR_TOMATO, msg2all);
-	format(msg2all, sizeof(msg2all), "Администратор %s забанил Вас до %s. Причина: '%s'.", Player[playerid][Name], timeBanQuit, reason);
+	format(msg2all, sizeof(msg2all), "Администратор %s забанил Вас до %s. Причина: '%s'.", Player[playerid][Name], timeBanEnd, reason);
 	SendClientMessage(bastard, COLOR_TOMATO, msg2btrd);
 	KickAndQuit(bastard);
 	return 1;

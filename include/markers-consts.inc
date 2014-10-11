@@ -43,3 +43,6 @@ new deleted_weapons[6] =
 	38, // Миниган
 	16, // Граната (не взрывается)
 }
+
+// Соль
+#define SALT "gbcmrf"
