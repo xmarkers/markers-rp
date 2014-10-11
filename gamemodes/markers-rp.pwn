@@ -5,6 +5,7 @@
 #include <a_mysql>
 #include <sscanf2>
 #include <zcmd>
+#include <mxdate>
 #include <Encrypt>
 
 // Handle подключения MySQL
@@ -561,6 +562,23 @@ CMD:kick(playerid, params[])
 	format(msg2all, sizeof(msg2all), "Администратор %s кикнул игрока %s. Причина: %s", Player[playerid][Name], Player[bastard][Name], reason);
 	SendClientMessageToAll(COLOR_TOMATO, msg2all);
 	format(msg2btrd, sizeof(msg2btrd), "Вас кикнул администратор %s. Причина: %s", Player[playerid][Name], reason);
+	SendClientMessage(bastard, COLOR_TOMATO, msg2btrd);
+	KickAndQuit(bastard);
+	return 1;
+}
+
+CMD:ban(playerid, params[])
+{
+	if (!Player[playerid][IsLoggedIn]) return 1;
+	new bastard, day, reason[50], msg2all[100], msg2btrd[100];
+	if (sscanf(params, "rds", bastard, days, reason))
+		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /ban [ID] [Кол-во дней] [Причина]");
+	new uTimeNow = gettime(), uTimeBanQuit = gettime() + days*24*60;
+	new timeNow[20], timeBanQuit[20];
+	timeBanQuit = date(uTimeBanQuit, "%dd.%mm.%yyyy %hh:%ii%ss");
+	format(msg2all, sizeof(msg2all), "Администратор %s забанил игрока %s до %s. Причина: '%s'.", Player[playerid][Name], Player[bastard][Name], timeBanQuit, reason);
+	SendClientMessageToAll(COLOR_TOMATO, msg2all);
+	format(msg2all, sizeof(msg2all), "Администратор %s забанил Вас до %s. Причина: '%s'.", Player[playerid][Name], timeBanQuit, reason);
 	SendClientMessage(bastard, COLOR_TOMATO, msg2btrd);
 	KickAndQuit(bastard);
 	return 1;
