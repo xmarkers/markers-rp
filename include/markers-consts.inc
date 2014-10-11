@@ -20,6 +20,7 @@
 #define C_COLOR_CORNFLOWERBLUE "{6495ED}"
 #define C_COLOR_TOMATO "{FF6347}"
 #define C_COLOR_BLUE "{0000FF}"
+#define C_COLOR_CYAN "{60FFFF}"
 
 // Цвета прочие
 #define COLOR_WHITE 0xFFFFFFAA
@@ -29,14 +30,16 @@
 #define COLOR_LIGHTBLUE 0x33CCFFAA
 #define COLOR_TOMATO 0xFF6347AA
 #define COLOR_BLUE 0x0000FFAA
+#define COLOR_CYAN 0x60FFFFAA
 
 // Список ID запрещённого оружия
 new deleted_weapons[6] =
 {
-	39,
-	40,
-	35,
-	36,
-	37,
-	38
+	39, // Взрыв пакет
+	40, // Детонатор
+	35, // RocketLauncher
+	36, // WEAPON_HEATSEEKER rocket
+	37, // Огнемет
+	38, // Миниган
+	16, // Граната (не взрывается)
 }
