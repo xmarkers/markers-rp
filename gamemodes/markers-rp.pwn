@@ -9,12 +9,13 @@ AntiDeAMX()
 }
 
 #include <a_samp>
+#include <dc_cmd>
 //#include <a_npc>
 #include <markers-consts>
 #include <markers-mapping>
+#include <markers-cars>
 #include <a_mysql>
 #include <sscanf2>
-#include <zcmd>
 #include <mxdate>
 #include <Encrypt>
 
@@ -68,6 +69,15 @@ enum
 };
 
 new Player[MAX_PLAYERS][E_PLAYERS]; // Объявим массив игроков
+
+// Структура потоков
+new Threads[3] =
+{
+	CeateObject,
+	SpawnCars, //?
+	RemoveObject
+}
+
 new MySQL_RACE_CHECK[MAX_PLAYERS]; // Для проверки валидности пользователя при длительных запросах
 
 
@@ -87,12 +97,25 @@ forward OnPlayerRegister(playerid);
 public OnGameModeInit()
 {
 	AntiDeAMX();
-	LoadMapping_GameStart();
+
+	// Создадим объекты в отдельном потоке
+	Threads[CeateObject] = CreateThread("LoadMapping_GameStart");
 
 	// Логирование ошибок MySQL в HTML виде
 	mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML);
 	// Установим соединение с MySQL
 	MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
+
+	// Отключим бонусы за уникальные прыжки
+	EnableStuntBonusForAll(0);
+	// Запретить авто включение двигателя и фар
+	//ManualVehicleEngineAndLights(); !!!!!!!!!!!!!!!!!!!!!!!!!!!!! Потом раскоментировать
+	// Запрет стандартных входов в здание
+	DisableInteriorEnterExits();
+	// Запрещаем носить оружие в интерьерах
+	AllowInteriorWeapons(0);
+	// Радиус отображения маркеров
+	LimitPlayerMarkerRadius(50.0);
 
 	print("Markers-RP: Loaded!");
 	return 1;
@@ -100,6 +123,12 @@ public OnGameModeInit()
 
 public OnGameModeExit()
 {
+	// Удалим потоки
+	//for (new i=0; i < sizeof(Threads); ++i)
+	//{
+		//DestroyThread(Threads[i]);
+	//}
+	
 	// Сбросим данные пользователей в MySQL
 	for(new p=0; p < MAX_PLAYERS; ++p)
 	{
@@ -469,6 +498,9 @@ Welcome(playerid)
 {
         // Удалим объекты для игрока
 	RemoveBuldsForPlayer(playerid);
+	// Удалим объекты для игрока в отдельном потоке
+	//Threads[RemoveObject] = CreateThread("RemoveBuldsForPlayer");
+
 
 	// Дадим бабок
 	ResetPlayerMoney(playerid);
@@ -524,6 +556,7 @@ CMD:gmx(playerid, params[])
 	GameModeExit();
 	return 1;
 }
+ALTX:gmx("/restart", "/умри"); // !!!!! Удалить
 
 CMD:veh(playerid, params[])
 {
@@ -551,6 +584,7 @@ CMD:veh(playerid, params[])
 	return 1;
 
 }
+ALTX:veh("/makecar", "/дай_покататься"); // !!!!! Удалить
 
 CMD:givegun(playerid, params[])
 {
@@ -571,6 +605,7 @@ CMD:givegun(playerid, params[])
 	GivePlayerWeapon(playerid, gunid, ammo);
 	return 1;
 }
+ALTX:givegun("/gm", "/дай_пострелять"); // !!!!! Удалить
 
 CMD:time(playerid)
 {
@@ -599,6 +634,7 @@ CMD:kick(playerid, params[])
 	KickAndQuit(bastard);
 	return 1;
 }
+ALTX:kick("/k", "/изыйди"); // !!!!! Удалить
 
 CMD:ban(playerid, params[])
 {
@@ -617,5 +653,6 @@ CMD:ban(playerid, params[])
 	KickAndQuit(bastard);
 	return 1;
 }
+ALTX:ban("/b", "/порошок_не_входи"); // !!!!! Удалить
 
 main(){}
