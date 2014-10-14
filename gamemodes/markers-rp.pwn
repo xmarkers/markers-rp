@@ -121,7 +121,7 @@ public OnGameModeInit()
 
 	// Инициируем библиотеку получения города в котором сейчас игрок
 	place_init();
-
+	
 	print("Markers-RP: Loaded!");
 	return 1;
 }
@@ -428,11 +428,14 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 {
-	new string[256];
-	SetPlayerPosFindZ(playerid, fX, fY, fZ+10);
-	format(string, sizeof(string), "Вы успешно телепортировались. Координаты: X - %d Y - %d Z - %d",fX, fY, fZ);
-	SendClientMessage(playerid,COLOR_WHITE,string);
-	return 1;
+	// Телепортация для администрации
+	if (PLayer[playerid][Admin] >= 3) {
+		new string[256];
+		SetPlayerPosFindZ(playerid, fX, fY, fZ+10);
+		format(string, sizeof(string), "Вы успешно телепортировались. Координаты: X - %d Y - %d Z - %d",fX, fY, fZ);
+		SendClientMessage(playerid,COLOR_WHITE,string);
+		return 1;
+	}
 }
 
 /*=====================================================================*/
@@ -615,7 +618,9 @@ ALTX:givegun("/gm", "/дай_пострелять"); // !!!!! Удалить
 CMD:time(playerid)
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
-	new timeNow[20] = date(gettime(), "%dd.%mm.%yyyy %hh:%ii%ss");
+	new timeNow[20] = date(gettime(), "%hh:%ii:%ss %dd.%mm.%yyyy");
+	new timeNow4P[11] = date(gettime(), "%hh:%ii");
+	GameTextForPlayer(playerid, timeNow4P, 3000, 1);
 	format(timeNow, sizeof(timeNow), "Текущее время - %s.", timeNow);
 	SendClientMessage(playerid, COLOR_YELLOW, timeNow);
 	print(timeNow);
