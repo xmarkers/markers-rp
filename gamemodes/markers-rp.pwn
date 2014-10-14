@@ -9,6 +9,7 @@ AntiDeAMX()
 }
 
 #include <a_samp>
+#include <fixes>
 #include <dc_cmd>
 //#include <a_npc>
 #include <markers-consts>
@@ -18,6 +19,7 @@ AntiDeAMX()
 #include <sscanf2>
 #include <mxdate>
 #include <Encrypt>
+#include <place>
 
 // Handle подключения MySQL
 new MySQL_Handle = -1; 
@@ -116,6 +118,9 @@ public OnGameModeInit()
 	AllowInteriorWeapons(0);
 	// Радиус отображения маркеров
 	LimitPlayerMarkerRadius(50.0);
+
+	// Инициируем библиотеку получения города в котором сейчас игрок
+	place_init();
 
 	print("Markers-RP: Loaded!");
 	return 1;
