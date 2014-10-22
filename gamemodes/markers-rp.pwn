@@ -9,26 +9,20 @@ AntiDeAMX()
 }
 
 #include <a_samp>
-//#include <fixes> // Компилятор очень далеко и на долго меня послал, надо будет разобраться.
-#include <fixes2>
+#include <fixes>
 #include <dc_cmd>
 //#include <a_npc>
-#include <streamer>
-#include <thread>
+#include <markers-consts>
+#include <markers-mapping>
+#include <markers-cars>
 #include <a_mysql>
 #include <sscanf2>
 #include <mxdate>
 #include <Encrypt>
 #include <place>
-// Подключим наши запчасти
-#include <markers-consts>
-#include <markers-mapping>
-#include <markers-cars>
-
 
 // Handle подключения MySQL
 new MySQL_Handle = -1; 
-new bool:MySQL_Conneced;
 
 // Структура хранения данных игрока
 enum E_PLAYERS
@@ -78,14 +72,13 @@ enum
 
 new Player[MAX_PLAYERS][E_PLAYERS]; // Объявим массив игроков
 
-/*// Структура потоков
-enum Threads_l
+// Структура потоков
+new Threads[3] =
 {
 	CeateObject,
 	SpawnCars, //?
 	RemoveObject
 }
-new Threads[Threads_l];*/
 
 new MySQL_RACE_CHECK[MAX_PLAYERS]; // Для проверки валидности пользователя при длительных запросах
 
@@ -105,36 +98,15 @@ forward OnPlayerRegister(playerid);
 
 public OnGameModeInit()
 {
-	print(" ");
-	printf("/====================== %s ===================/", date("%dd.%mm.%yyyy %hh:%ii", gettime()));
-	print("* Начало загрузки...");
- 	new StartT, EndT;
-	StartT = gettime();
 	AntiDeAMX();
 
-	/*// Создадим объекты в отдельном потоке
-	Threads[CeateObject] = CreateThread("LoadMapping_GameStart");*/
-	print("* Загружаем маппинг...");
-	LoadMapping_GameStart();
-	print("\t Готово!");
+	// Создадим объекты в отдельном потоке
+	Threads[CeateObject] = CreateThread("LoadMapping_GameStart");
 
-	// Заспавним машины
-	print("* Загружаем машины...");
-	AddSpawningCar_GameStart();
-	print("\t Готово!");
-
-	print("Подключение к БД...");
 	// Логирование ошибок MySQL в HTML виде
 	mysql_log(LOG_ERROR | LOG_WARNING, LOG_TYPE_HTML);
 	// Установим соединение с MySQL
 	MySQL_Handle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASSWORD);
-	if(mysql_errno() != 0)
-	{
-		print("КРИТИЧЕСКАЯ ОШИБКА! Не удалось установить соединение с БД! Загрузка прекращена!");
-		return 1; // 1 - Чтобы мод как-бы инициализировался и мы могли потом сообщить юзеру, что не судьба ему поиграть сегодня.
-	}
-	MySQL_Conneced++;
-	print("\tГотово!");
 
 	// Отключим бонусы за уникальные прыжки
 	EnableStuntBonusForAll(0);
@@ -149,13 +121,8 @@ public OnGameModeInit()
 
 	// Инициируем библиотеку получения города в котором сейчас игрок
 	place_init();
-
-	EndT = gettime();
-	EndT -= StartT;
-	print("_________________________________________________________");
-	print(" ");
-	printf("Markers-RP: Loaded! Загружен за %i секунд.", EndT);
-	print(" ");
+	
+	print("Markers-RP: Loaded!");
 	return 1;
 }
 
@@ -190,13 +157,6 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
-	// Если нету коннекта к базе, то гудбай
-	if (!MySQL_Conneced)
-	{
-		SendClientMessage(playerid, COLOR_TOMATO, "На сервере проводятся технические работы, попробуйте подключится позже!");
-		DelayedKick(playerid, 2000);
-	}
-
 	MySQL_RACE_CHECK[playerid]++; // Установим проверочную переменную
 	for(new E_PLAYERS:e; e < E_PLAYERS; ++e) 
 		Player[playerid][e] = 0; // Сбросим параметры подключившегося пользователя
@@ -204,9 +164,9 @@ public OnPlayerConnect(playerid)
 	GetPlayerName(playerid, Player[playerid][Name], MAX_PLAYER_NAME);
 
 	// Создаем новую структуру запроса
-	new ORM:ormid = Player[playerid][ORM_ID] = orm_create("players_data", MySQL_Handle);
+	new ORM:ormid = Player[playerid][ORM_ID] = orm_create("players", MySQL_Handle);
 	orm_addvar_int(ormid, Player[playerid][ID], "id");
-	mysql_escape_string(Player[playerid][Name], Player[playerid][Name], MySQL_Handle, 128);
+	mysql_escape_string(Player[playerid][Name], Player[playerid][Name], MySQL, 128);
 	orm_addvar_string(ormid, Player[playerid][Name], MAX_PLAYER_NAME, "username");
 	orm_addvar_string(ormid, Player[playerid][Password], 33, "password");
 	orm_addvar_string(ormid, Player[playerid][email], 100, "email");
@@ -217,10 +177,6 @@ public OnPlayerConnect(playerid)
 	// Сделаем запрос в паралельном потоке
 	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, MySQL_RACE_CHECK[playerid]);
 
-        // Удалим объекты для игрока
-	RemoveBuldsForPlayer(playerid);
-	// Удалим объекты для игрока в отдельном потоке
-	//Threads[RemoveObject] = CreateThread("RemoveBuldsForPlayer");
 	//.....
 	return 1;
 }
@@ -237,12 +193,10 @@ public OnPlayerSpawn(playerid)
 		ShowPlayerDialog(playerid, DIALOG_UNUSED, DIALOG_STYLE_MSGBOX, "Ошибка", C_COLOR_WHITE "Вы должны быть зарегистрированы и должны войти в систему...", "", "");
 		KickAndQuit(playerid);
 	}
-
 	SetPlayerPos(playerid,1760.7921,-1900.1312,13.5636);
 	SetPlayerFacingAngle(playerid,270.02);
 	SetPlayerInterior(playerid,0);
 	SetPlayerVirtualWorld(playerid, 0);
-	SetCameraBehindPlayer(playerid);
 
 	new welcome_msg[50];
 	format(welcome_msg, sizeof(welcome_msg), "~w~Welcome ~n~~b~   %s", Player[playerid][Name]);
@@ -453,8 +407,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		// Получим текущий IP
 		GetPlayerIp(playerid, Player[playerid][Reg_IP], 15);
 		// Сохраним профиль
-		mysql_escape_string(Player[playerid][email], Player[playerid][email], MySQL_Handle, 128); // Обфускация
-		mysql_escape_string(Player[playerid][phone], Player[playerid][phone], MySQL_Handle, 128); // Обфускация
+		mysql_escape_string(Player[playerid][email], Player[playerid][email], MySQL, 128); // Обфускация
+		mysql_escape_string(Player[playerid][phone], Player[playerid][phone], MySQL, 128); // Обфускация
 		orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
 
 	    }
@@ -474,11 +428,14 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 {
-	new string[256];
-	SetPlayerPosFindZ(playerid, fX, fY, fZ+10);
-	format(string, sizeof(string), "Вы успешно телепортировались. Координаты: X - %d Y - %d Z - %d",fX, fY, fZ);
-	SendClientMessage(playerid,COLOR_WHITE,string);
-	return 1;
+	// Телепортация для администрации
+	if (PLayer[playerid][Admin] >= 3) {
+		new string[256];
+		SetPlayerPosFindZ(playerid, fX, fY, fZ+10);
+		format(string, sizeof(string), "Вы успешно телепортировались. Координаты: X - %d Y - %d Z - %d",fX, fY, fZ);
+		SendClientMessage(playerid,COLOR_WHITE,string);
+		return 1;
+	}
 }
 
 /*=====================================================================*/
@@ -545,14 +502,14 @@ DelayedKick(playerid, time=500)
 	return 1;
 }
 
-public _KickPlayerDelayed(playerid)
-{
-	KickAndQuit(playerid);
-	return 1;
-}
-
 Welcome(playerid)
 {
+        // Удалим объекты для игрока
+	RemoveBuldsForPlayer(playerid);
+	// Удалим объекты для игрока в отдельном потоке
+	//Threads[RemoveObject] = CreateThread("RemoveBuldsForPlayer");
+
+
 	// Дадим бабок
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid, Player[playerid][Money]);
@@ -588,6 +545,12 @@ Welcome(playerid)
 
 }
 
+public _KickPlayerDelayed(playerid)
+{
+	KickAndQuit(playerid);
+	return 1;
+}
+
 PreloadAnimLib(playerid, animlib[])
 {
 	ApplyAnimation(playerid,animlib,"null",0.0,0,0,0,0,0);
@@ -601,7 +564,7 @@ CMD:gmx(playerid, params[])
 	GameModeExit();
 	return 1;
 }
-ALTX:gmx("/restart", "/умри") // !!!!! Удалить
+ALTX:gmx("/restart", "/умри"); // !!!!! Удалить
 
 CMD:veh(playerid, params[])
 {
@@ -629,7 +592,7 @@ CMD:veh(playerid, params[])
 	return 1;
 
 }
-ALTX:veh("/makecar", "/дай_покататься") // !!!!! Удалить
+ALTX:veh("/makecar", "/дай_покататься"); // !!!!! Удалить
 
 CMD:givegun(playerid, params[])
 {
@@ -650,13 +613,14 @@ CMD:givegun(playerid, params[])
 	GivePlayerWeapon(playerid, gunid, ammo);
 	return 1;
 }
-ALTX:givegun("/gm", "/дай_пострелять") // !!!!! Удалить
+ALTX:givegun("/gm", "/дай_пострелять"); // !!!!! Удалить
 
-CMD:time(playerid, params[])
+CMD:time(playerid)
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
-	new timeNow[128]; // В вызываемой функции, возвращаемый буфер объявлен именно 128 символов, компилятор не дает указывать меньше этой цифры
-	timeNow = date("%dd.%mm.%yyyy %hh:%ii%ss", gettime());
+	new timeNow[20] = date(gettime(), "%hh:%ii:%ss %dd.%mm.%yyyy");
+	new timeNow4P[11] = date(gettime(), "%hh:%ii");
+	GameTextForPlayer(playerid, timeNow4P, 3000, 1);
 	format(timeNow, sizeof(timeNow), "Текущее время - %s.", timeNow);
 	SendClientMessage(playerid, COLOR_YELLOW, timeNow);
 	print(timeNow);
@@ -680,20 +644,18 @@ CMD:kick(playerid, params[])
 	KickAndQuit(bastard);
 	return 1;
 }
-ALTX:kick("/k", "/изыйди") // !!!!! Удалить
+ALTX:kick("/k", "/изыйди"); // !!!!! Удалить
 
 CMD:ban(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
-	new bastard, days, reason[50], msg2all[100], msg2btrd[100];
+	new bastard, day, reason[50], msg2all[100], msg2btrd[100];
 	if (sscanf(params, "rds", bastard, days, reason))
 		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /ban [ID] [Кол-во дней] [Причина]");
-	new //uTimeNow = gettime(),// Не используется
-	uTimeBanEnd = gettime() + days*24*60;
+	new uTimeNow = gettime(), uTimeBanEnd = gettime() + days*24*60;
 	Player[bastard][BanEnd] = uTimeBanEnd;
-	new //timeNow[20], // Не используется
-	timeBanEnd[128];
-	timeBanEnd = date("%dd.%mm.%yyyy %hh:%ii%ss", uTimeBanEnd);
+	new timeNow[20], timeBanEnd[20];
+	timeBanEnd = date(uTimeBanEnd, "%dd.%mm.%yyyy %hh:%ii%ss");
 	format(msg2all, sizeof(msg2all), "Администратор %s забанил игрока %s до %s. Причина: '%s'.", Player[playerid][Name], Player[bastard][Name], timeBanEnd, reason);
 	SendClientMessageToAll(COLOR_TOMATO, msg2all);
 	format(msg2all, sizeof(msg2all), "Администратор %s забанил Вас до %s. Причина: '%s'.", Player[playerid][Name], timeBanEnd, reason);
@@ -701,6 +663,6 @@ CMD:ban(playerid, params[])
 	KickAndQuit(bastard);
 	return 1;
 }
-ALTX:ban("/b", "/порошок_не_входи") // !!!!! Удалить
+ALTX:ban("/b", "/порошок_не_входи"); // !!!!! Удалить
 
 main(){}
