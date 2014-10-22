@@ -613,6 +613,7 @@ ALTX:gmx("/restart", "/умри") // !!!!! Удалить
 CMD:veh(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
+	if (isnull(params)) return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /veh [carid] [цвет1] [цвет2]");
 	new car_id, Color_1, Color_2;
 	if (sscanf(params, "ddd", car_id, Color_1, Color_2))
 		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /veh [carid] [цвет1] [цвет2]");
@@ -641,10 +642,11 @@ ALTX:veh("/makecar", "/дай_покататься") // !!!!! Удалить
 CMD:givegun(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
+	if (isnull(params)) return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /givegun [ID оружия] [кол-во патронов]");
 	new player, gunid, ammo;
 	if (sscanf(params, "rdd", player, gunid, ammo))
 		if (sscanf(params, "dd", gunid, ammo))
-			return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /%0 givegun [ID оружия] [кол-во патронов]");
+			return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /givegun [ID оружия] [кол-во патронов]");
 	if (player == INVALID_PLAYER_ID)
 		return SendClientMessage(playerid, COLOR_GREY, "Игрока с таким ID не существует!");
 	if (gunid < 1 && gunid > 54)
@@ -676,13 +678,10 @@ CMD:time(playerid, params[])
 CMD:kick(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
+	if (isnull(params)) return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /kick [ID игрока] {Причина}");
 	new bastard, reason[50], msg2all[100], msg2btrd[100];
 	if (sscanf(params, "rs", bastard, reason))
-		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /kick [ID игрока] {Причина}");
-	if (sscanf(params, "r", bastard)) {
-		reason = "[причина не указана]";
-		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /kick [ID игрока] {Причина}");
-	}
+		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /kick [ID игрока] [Причина]");
 	format(msg2all, sizeof(msg2all), "Администратор %s кикнул игрока %s. Причина: %s", Player[playerid][Name], Player[bastard][Name], reason);
 	SendClientMessageToAll(COLOR_TOMATO, msg2all);
 	format(msg2btrd, sizeof(msg2btrd), "Вас кикнул администратор %s. Причина: %s", Player[playerid][Name], reason);
@@ -695,9 +694,10 @@ ALTX:kick("/k", "/изыйди") // !!!!! Удалить
 CMD:ban(playerid, params[])
 {
 	if (!Player[playerid][IsLoggedIn]) return 1;
+	if (isnull(params)) return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /ban [ID] [Кол-во дней] [Причина]");
 	new bastard, days, reason[50], msg2all[100], msg2btrd[100];
 	if (sscanf(params, "rds", bastard, days, reason))
-		return SendClientMessage(playerid, COLOR_GREY, "Используйте: /ban [ID] [Кол-во дней] [Причина]");
+		return SendClientMessage(playerid, COLOR_WHITE, "Используйте: /ban [ID] [Кол-во дней] [Причина]");
 	new //uTimeNow = gettime(),// Не используется
 	uTimeBanEnd = gettime() + days*24*60;
 	Player[bastard][BanEnd] = uTimeBanEnd;
