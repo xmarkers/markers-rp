@@ -1,5 +1,4 @@
 #pragma library markers-mapping
-#include <streamer>
 
 // Хранилище созданных объектов
 enum s_OBJECTS
@@ -9,15 +8,15 @@ enum s_OBJECTS
 }
 new OBJECTS[s_OBJECTS];
 
-forward LoadMapping_GameStart(trhID=0); // Добавление объектов и пр.
+forward LoadMapping_GameStart(); // Добавление объектов и пр.
 forward RemoveBuldsForPlayer(playerid); // Удалить существующие объекты
 
-public LoadMapping_GameStart(trhID=0)
+public LoadMapping_GameStart()
 {
    // Создадим надписи на зданиях
 	new T_obj = CreateObject(10671, 1811.27, -1292.02, 14.95,   0.00, 0.00, 312.10);
 	SetObjectMaterialText(T_obj, C_COLOR_CYAN "Телецен", 0, OBJECT_MATERIAL_SIZE_128x32, "Arial", 36, 1, -16776961, 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
-	T_Obj = CreateObject(10671, 1805.62, -1297.24, 14.95,   0.00, 0.00, 312.10);
+	T_obj = CreateObject(10671, 1805.62, -1297.24, 14.95,   0.00, 0.00, 312.10);
 	SetObjectMaterialText(T_obj, C_COLOR_CYAN "тр", 0, OBJECT_MATERIAL_SIZE_128x32, "Arial", 36, 1, -16776961, 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER );
 
    // Создадим мигалки
@@ -28,8 +27,8 @@ public LoadMapping_GameStart(trhID=0)
 
 
 	// ....
-	print("Mapping Loaded");
-	DestroyThread(Threads[CeateObject]);
+	//print("Mapping Loaded");
+	//DestroyThread(trhID);
 	return 1;
 }
 
@@ -235,6 +234,6 @@ RemoveBuildingForPlayer(playerid, 2640, 1125.8672, 3.7969, 1000.5234, 0.25);
 RemoveBuildingForPlayer(playerid, 2640, 1127.8828, 3.7969, 1000.5234, 0.25);
 RemoveBuildingForPlayer(playerid, 2640, 1126.8828, 3.7969, 1000.5234, 0.25);
 
-   //DestroyThread(Threads[RemoveObject]);
-	return 1;
+//DestroyThread(Threads[RemoveObject]);
+return 1;
 }

@@ -1,0 +1,3124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="file:///D|/Games/GTA/server_n/pawno/xml/pawndoc.xsl" type="text/xsl"?>
+<doc source="markers-rp.pwn">
+	<assembly>
+		<name>markers-rp.pwn</name>
+	</assembly>
+
+	<!-- general -->
+	<general>
+		MySQL plugin R39-2 
+	</general>
+
+	<members>
+
+		<!-- enumerations -->
+		<member name="T:E_PLAYERS" value="193">
+			<tagname value="E_PLAYERS"/>
+			<member name="C:ORM_ID" value="0">
+				<tagname value="ORM"/>
+			</member>
+			<member name="C:ID" value="1">
+			</member>
+			<member name="C:dbID" value="2">
+			</member>
+			<member name="C:Name" value="3">
+				<size value="24"/>
+			</member>
+			<member name="C:email" value="27">
+				<size value="100"/>
+			</member>
+			<member name="C:phone" value="127">
+				<size value="11"/>
+			</member>
+			<member name="C:Password" value="138">
+				<size value="33"/>
+			</member>
+			<member name="C:Money" value="171">
+			</member>
+			<member name="C:IsLoggedIn" value="172">
+				<tagname value="bool"/>
+			</member>
+			<member name="C:IsRegistered" value="173">
+				<tagname value="bool"/>
+			</member>
+			<member name="C:LoginAttempts" value="174">
+			</member>
+			<member name="C:LoginTimer" value="175">
+			</member>
+			<member name="C:Level" value="176">
+			</member>
+			<member name="C:DateReg" value="177">
+			</member>
+			<member name="C:HP" value="178">
+			</member>
+			<member name="C:Armour" value="179">
+			</member>
+			<member name="C:Admin" value="180">
+			</member>
+			<member name="C:Frac" value="181">
+			</member>
+			<member name="C:FracLVL" value="182">
+			</member>
+			<member name="C:FracSkin" value="183">
+			</member>
+			<member name="C:Wanted" value="184">
+			</member>
+			<member name="C:Reg_IP" value="185">
+			</member>
+			<member name="C:Skin" value="186">
+			</member>
+			<member name="C:BanEnd" value="187">
+			</member>
+			<member name="C:House" value="188">
+			</member>
+			<member name="C:Car" value="189">
+			</member>
+			<member name="C:CarKeys" value="190">
+			</member>
+			<member name="C:Bank" value="191">
+			</member>
+			<member name="C:Business" value="192">
+			</member>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+		</member>
+		<member name="T:s_OBJECTS" value="4">
+			<tagname value="s_OBJECTS"/>
+			<member name="C:FLASHER" value="0">
+				<size value="4"/>
+			</member>
+		</member>
+		<member name="T:s_cars" value="2740">
+			<tagname value="s_cars"/>
+			<member name="C:F_BALLAS" value="0">
+				<size value="7"/>
+			</member>
+			<member name="C:F_GROVE" value="7">
+				<size value="6"/>
+			</member>
+			<member name="C:F_AZTECAS" value="13">
+				<size value="7"/>
+			</member>
+			<member name="C:F_VAGOS" value="20">
+				<size value="6"/>
+			</member>
+			<member name="C:F_RIFA" value="26">
+				<size value="9"/>
+			</member>
+			<member name="C:F_COSANOSTRA" value="35">
+				<size value="8"/>
+			</member>
+			<member name="C:F_YAKUZA" value="43">
+				<size value="10"/>
+			</member>
+			<member name="C:F_RUSSIAN" value="53">
+				<size value="9"/>
+			</member>
+			<member name="C:FIRE_LS" value="62">
+				<size value="4"/>
+			</member>
+			<member name="C:FIRE_SF" value="66">
+				<size value="5"/>
+			</member>
+			<member name="C:FIRE_LV" value="71">
+				<size value="5"/>
+			</member>
+			<member name="C:F_MED_HEAD" value="76">
+			</member>
+			<member name="C:F_MED_LS" value="77">
+				<size value="8"/>
+			</member>
+			<member name="C:F_MED_LV" value="85">
+				<size value="6"/>
+			</member>
+			<member name="C:F_MED_SF" value="91">
+				<size value="8"/>
+			</member>
+			<member name="C:F_ARMY_HEAD" value="99">
+			</member>
+			<member name="C:F_ARMY_LAND" value="100">
+				<size value="14"/>
+			</member>
+			<member name="C:F_ARMY_WATER" value="114">
+				<size value="15"/>
+			</member>
+			<member name="C:F_ARMY_AIR" value="129">
+				<size value="12"/>
+			</member>
+			<member name="C:F_ARMY_SUPPLY" value="141">
+				<size value="3"/>
+			</member>
+			<member name="C:F_POLICE_HEAD" value="144">
+			</member>
+			<member name="C:F_POLICE_FBI" value="145">
+				<size value="10"/>
+			</member>
+			<member name="C:F_POLICE_LS" value="155">
+				<size value="16"/>
+			</member>
+			<member name="C:F_POLICE_LV" value="171">
+				<size value="14"/>
+			</member>
+			<member name="C:F_POLICE_SF" value="185">
+				<size value="16"/>
+			</member>
+			<member name="C:F_MEDIA_HEAD" value="201">
+			</member>
+			<member name="C:F_MEDIA_TV" value="202">
+				<size value="9"/>
+			</member>
+			<member name="C:F_MEDIA_R_LS" value="211">
+				<size value="6"/>
+			</member>
+			<member name="C:F_MEDIA_R_SF" value="217">
+				<size value="7"/>
+			</member>
+			<member name="C:F_MEDIA_R_LV" value="224">
+				<size value="5"/>
+			</member>
+			<member name="C:F_GOV_AP" value="229">
+				<size value="11"/>
+			</member>
+			<member name="C:F_GOV_LV" value="240">
+				<size value="4"/>
+			</member>
+			<member name="C:F_GOV_LS" value="244">
+				<size value="4"/>
+			</member>
+			<member name="C:F_GOV_SF" value="248">
+				<size value="4"/>
+			</member>
+			<member name="C:RENT_BOAT" value="252">
+				<size value="5"/>
+			</member>
+			<member name="C:RENT_VELO" value="257">
+				<size value="76"/>
+			</member>
+			<member name="C:RENT_LOWEND" value="333">
+				<size value="76"/>
+			</member>
+			<member name="C:RENT_MIDEND" value="409">
+				<size value="76"/>
+			</member>
+			<member name="C:RENT_HIEND" value="485">
+				<size value="76"/>
+			</member>
+			<member name="C:FACTORY_TRAIN" value="561">
+				<size value="4"/>
+			</member>
+			<member name="C:FACTORY_TRAILER" value="565">
+				<size value="4"/>
+			</member>
+			<member name="C:FACTORY_WAGON" value="569">
+				<size value="4"/>
+			</member>
+			<member name="C:DELIVERY_GOODS_TRAIN" value="573">
+				<size value="3"/>
+			</member>
+			<member name="C:DELIVERY_GOODS_TRAILER" value="576">
+				<size value="3"/>
+			</member>
+			<member name="C:DELIVERY_GOODS_WAGON" value="579">
+				<size value="3"/>
+			</member>
+			<member name="C:DELIVERY_OIL_TRAIN" value="582">
+				<size value="3"/>
+			</member>
+			<member name="C:DELIVERY_OIL_TRAILER" value="585">
+				<size value="3"/>
+			</member>
+			<member name="C:TRAINING" value="588">
+				<size value="10"/>
+			</member>
+			<member name="C:MECHANIC" value="598">
+				<size value="35"/>
+			</member>
+			<member name="C:TRAIN" value="633">
+				<size value="3"/>
+			</member>
+			<member name="C:BUS" value="636">
+				<size value="52"/>
+			</member>
+			<member name="C:TAXI" value="688">
+				<size value="52"/>
+			</member>
+			<member name="C:HOME" value="740">
+				<size value="2000"/>
+			</member>
+		</member>
+
+		<!-- constants -->
+		<member name="C:DIALOG_LOGIN" value="2">
+			<referrer name="OnDialogResponse"/>
+			<referrer name="OnPlayerDataLoaded"/>
+		</member>
+		<member name="C:DIALOG_REGISTER" value="3">
+			<referrer name="OnDialogResponse"/>
+			<referrer name="OnPlayerDataLoaded"/>
+		</member>
+		<member name="C:DIALOG_UNUSED" value="1">
+			<referrer name="OnPlayerSpawn"/>
+			<referrer name="OnDialogResponse"/>
+		</member>
+		<member name="C:cellmax" value="2147483647">
+			<referrer name="operator!(Float:)"/>
+		</member>
+		<member name="C:cellmin" value="-2147483648">
+			<referrer name="operator-(Float:)"/>
+		</member>
+		<member name="C:false" value="0">
+			<tagname value="bool"/>
+			<referrer name="date"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<referrer name="DelayedKick"/>
+		</member>
+		<member name="C:true" value="1">
+			<tagname value="bool"/>
+			<referrer name="OnFilterScriptInit"/>
+			<referrer name="OnGameModeInit"/>
+			<referrer name="OnDialogResponse"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<referrer name="OnPlayerRegister"/>
+		</member>
+
+		<!-- variables -->
+		<member name="F:CELLMIN_ON_MATCHES">
+		</member>
+		<member name="F:DC_CMD_include_version">
+			<attribute name="public"/>
+		</member>
+		<member name="F:ERROR_BLOCKING">
+		</member>
+		<member name="F:ERROR_DIALOG_CRASH">
+		</member>
+		<member name="F:ERROR_INVALID_CLIENT">
+		</member>
+		<member name="F:ERROR_PACKET_MODIFIED">
+		</member>
+		<member name="F:ERROR_PLAYER_DIALOG">
+		</member>
+		<member name="F:ERROR_PORT_REFUSED">
+		</member>
+		<member name="F:ERROR_RCON_EXPLOIT">
+		</member>
+		<member name="F:ERROR_SERVER_FULL">
+		</member>
+		<member name="F:MATCH_NAME_PARTIAL">
+		</member>
+		<member name="F:MySQL_Conneced">
+			<tagname value="bool"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+		</member>
+		<member name="F:MySQL_Handle">
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnDialogResponse"/>
+		</member>
+		<member name="F:MySQL_RACE_CHECK">
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnPlayerDataLoaded"/>
+		</member>
+		<member name="F:OBJECTS">
+			<referrer name="LoadMapping_GameStart"/>
+			<referrer name="SpawningCar_Police"/>
+		</member>
+		<member name="F:OLD_DEFAULT_CUSTOM">
+		</member>
+		<member name="F:OLD_DEFAULT_KUSTOM">
+		</member>
+		<member name="F:OLD_DEFAULT_NAME">
+		</member>
+		<member name="F:Player">
+			<referrer name="OnGameModeExit"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnPlayerSpawn"/>
+			<referrer name="OnDialogResponse"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<referrer name="OnPlayerRegister"/>
+			<referrer name="Welcome"/>
+			<referrer name="cmd_gmx"/>
+			<referrer name="cmd_veh"/>
+			<referrer name="cmd_givegun"/>
+			<referrer name="cmd_time"/>
+			<referrer name="cmd_kick"/>
+			<referrer name="cmd_ban"/>
+		</member>
+		<member name="F:SSCANF_QUIET">
+		</member>
+		<member name="F:SSCANF_gInit">
+			<tagname value="bool"/>
+			<referrer name="OnFilterScriptInit"/>
+			<referrer name="OnGameModeInit"/>
+		</member>
+		<member name="F:SSCANF_g_sPlayers">
+		</member>
+		<member name="F:SpawningCars">
+			<referrer name="AddSpawningCar_GameStart"/>
+			<referrer name="SpawningCar_Media"/>
+			<referrer name="SpawningCar_Mafia"/>
+			<referrer name="SpawningCar_Factory"/>
+			<referrer name="SpawningCar_Army"/>
+			<referrer name="SpawningCar_Fire"/>
+			<referrer name="SpawningCar_Medicine"/>
+			<referrer name="SpawningCar_Police"/>
+			<referrer name="SpawningCar_Mechanic"/>
+			<referrer name="SpawningCar_Delivery"/>
+		</member>
+		<member name="F:Streamer_IncludeFileVersion">
+			<attribute name="public"/>
+		</member>
+		<member name="F:VehicleColoursTableRGBA">
+		</member>
+		<member name="F:ZONE_LS">
+			<tagname value="Float"/>
+			<referrer name="place_init"/>
+		</member>
+		<member name="F:ZONE_LV">
+			<tagname value="Float"/>
+			<referrer name="place_init"/>
+		</member>
+		<member name="F:ZONE_SF">
+			<tagname value="Float"/>
+			<referrer name="place_init"/>
+		</member>
+		<member name="F:deleted_weapons">
+			<referrer name="cmd_givegun"/>
+		</member>
+		<member name="F:zones">
+			<referrer name="GetPlayerPosPlace"/>
+			<referrer name="place_init"/>
+		</member>
+
+		<!-- functions -->
+		<member name="M:operator!(Float:)" syntax="operator!(Float:)(oper)">
+			<tagname value="bool"/>
+			<stacksize value="1"/>
+			<dependency name="cellmax"/>
+			<param name="oper">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator%(_:,Float:)" syntax="operator%(_:,Float:)(oper1, oper2)">
+			<stacksize value="1"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator%(Float:,_:)" syntax="operator%(Float:,_:)(oper1, oper2)">
+			<stacksize value="1"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator%(Float:,Float:)" syntax="operator%(Float:,Float:)(oper1, oper2)">
+			<stacksize value="1"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator!=(Float:,_:)" syntax="operator!=(Float:,_:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator!=(Float:,Float:)" syntax="operator!=(Float:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator-(_:,Float:)" syntax="operator-(_:,Float:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatsub"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator-(Float:,_:)" syntax="operator-(Float:,_:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatsub"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator+(Float:,_:)" syntax="operator+(Float:,_:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<stacksize value="4"/>
+			<referrer name="OnPlayerClickMap"/>
+			<dependency name="float"/>
+			<dependency name="floatadd"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator/(_:,Float:)" syntax="operator/(_:,Float:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatdiv"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator/(Float:,_:)" syntax="operator/(Float:,_:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatdiv"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator*(Float:,_:)" syntax="operator*(Float:,_:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatmul"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator++(Float:)" syntax="operator++(Float:)(oper)">
+			<tagname value="Float"/>
+			<stacksize value="1"/>
+			<dependency name="operator+(Float:,Float:)"/>
+			<param name="oper">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator-(Float:)" syntax="operator-(Float:)(oper)">
+			<tagname value="Float"/>
+			<stacksize value="1"/>
+			<dependency name="cellmin"/>
+			<param name="oper">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator--(Float:)" syntax="operator--(Float:)(oper)">
+			<tagname value="Float"/>
+			<stacksize value="1"/>
+			<dependency name="operator-(Float:,Float:)"/>
+			<param name="oper">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator-(Float:,Float:)" syntax="operator-(Float:,Float:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator--(Float:)"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator+(Float:,Float:)" syntax="operator+(Float:,Float:)(oper1, oper2)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator++(Float:)"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:Float:operator=(_:)" syntax="Float:operator=(_:)(oper)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="SpawningCar_Police"/>
+			<referrer name="Welcome"/>
+			<param name="oper">
+			</param>
+		</member>
+		<member name="M:operator==(Float:,Float:)" syntax="operator==(Float:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator==(Float:,_:)" syntax="operator==(Float:,_:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator&gt;(Float:,Float:)" syntax="operator&gt;(Float:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&gt;(Float:,_:)" syntax="operator&gt;(Float:,_:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator&gt;(_:,Float:)" syntax="operator&gt;(_:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&gt;=(Float:,Float:)" syntax="operator&gt;=(Float:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&gt;=(Float:,_:)" syntax="operator&gt;=(Float:,_:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator&gt;=(_:,Float:)" syntax="operator&gt;=(_:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&lt;(Float:,Float:)" syntax="operator&lt;(Float:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&lt;(Float:,_:)" syntax="operator&lt;(Float:,_:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator&lt;(_:,Float:)" syntax="operator&lt;(_:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&lt;=(Float:,Float:)" syntax="operator&lt;=(Float:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:operator&lt;=(Float:,_:)" syntax="operator&lt;=(Float:,_:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+			</param>
+		</member>
+		<member name="M:operator&lt;=(_:,Float:)" syntax="operator&lt;=(_:,Float:)(oper1, oper2)">
+			<tagname value="bool"/>
+			<stacksize value="4"/>
+			<dependency name="float"/>
+			<dependency name="floatcmp"/>
+			<param name="oper1">
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:@receivepacket" syntax="@receivepacket(packet[], size, source[])">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="packet">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="size">
+			</param>
+			<param name="source">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:@receivestring" syntax="@receivestring(message[], source[])">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="message">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="source">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:AddSpawningCar_GameStart" syntax="AddSpawningCar_GameStart()">
+			<attribute name="public"/>
+			<stacksize value="10"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="SpawningCar_Army"/>
+			<dependency name="SpawningCar_Bus"/>
+			<dependency name="SpawningCar_Delivery"/>
+			<dependency name="SpawningCar_Factory"/>
+			<dependency name="SpawningCar_Fire"/>
+			<dependency name="SpawningCar_Goverment"/>
+			<dependency name="SpawningCar_Mafia"/>
+			<dependency name="SpawningCar_Mechanic"/>
+			<dependency name="SpawningCar_Media"/>
+			<dependency name="SpawningCar_Medicine"/>
+			<dependency name="SpawningCar_Police"/>
+			<dependency name="SpawningCar_Taxi"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="TRAIN"/>
+		</member>
+		<member name="M:AddStaticVehicle" syntax="AddStaticVehicle(modelid, spawn_x, spawn_y, spawn_z, z_angle, color1, color2)">
+			<attribute name="native"/>
+			<referrer name="SpawningCar_Fire"/>
+			<param name="modelid">
+			</param>
+			<param name="spawn_x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="spawn_y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="spawn_z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z_angle">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="color1">
+			</param>
+			<param name="color2">
+			</param>
+		</member>
+		<member name="M:AddStaticVehicleEx" syntax="AddStaticVehicleEx(modelid, spawn_x, spawn_y, spawn_z, z_angle, color1, color2, respawn_delay)">
+			<attribute name="native"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<referrer name="SpawningCar_Media"/>
+			<referrer name="SpawningCar_Mafia"/>
+			<referrer name="SpawningCar_Factory"/>
+			<referrer name="SpawningCar_Army"/>
+			<referrer name="SpawningCar_Medicine"/>
+			<referrer name="SpawningCar_Police"/>
+			<referrer name="SpawningCar_Mechanic"/>
+			<referrer name="SpawningCar_Delivery"/>
+			<param name="modelid">
+			</param>
+			<param name="spawn_x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="spawn_y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="spawn_z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z_angle">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="color1">
+			</param>
+			<param name="color2">
+			</param>
+			<param name="respawn_delay">
+			</param>
+		</member>
+		<member name="M:AllowInteriorWeapons" syntax="AllowInteriorWeapons(allow)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="allow">
+			</param>
+		</member>
+		<member name="M:AntiDeAMX" syntax="AntiDeAMX()">
+			<stacksize value="26"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+		</member>
+		<member name="M:ApplyAnimation" syntax="ApplyAnimation(playerid, animlib[], animname[], fDelta, loop, lockx, locky, freeze, time, forcesync)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<referrer name="PreloadAnimLib"/>
+			<param name="playerid">
+			</param>
+			<param name="animlib">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="animname">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="fDelta">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="loop">
+			</param>
+			<param name="lockx">
+			</param>
+			<param name="locky">
+			</param>
+			<param name="freeze">
+			</param>
+			<param name="time">
+			</param>
+			<param name="forcesync">
+			</param>
+		</member>
+		<member name="M:AttachObjectToVehicle" syntax="AttachObjectToVehicle(objectid, vehicleid, OffsetX, OffsetY, OffsetZ, RotX, RotY, RotZ)">
+			<attribute name="native"/>
+			<referrer name="SpawningCar_Police"/>
+			<param name="objectid">
+			</param>
+			<param name="vehicleid">
+			</param>
+			<param name="OffsetX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="OffsetY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="OffsetZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="RotX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="RotY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="RotZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:CreateDynamicPolygon" syntax="CreateDynamicPolygon(points[], minz, maxz, maxpoints, worldid, interiorid, playerid)">
+			<attribute name="native"/>
+			<referrer name="place_init"/>
+			<param name="points">
+				<paraminfo>Float [] </paraminfo>
+			</param>
+			<param name="minz">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="maxz">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="maxpoints">
+			</param>
+			<param name="worldid">
+			</param>
+			<param name="interiorid">
+			</param>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:CreateObject" syntax="CreateObject(modelid, X, Y, Z, rX, rY, rZ, DrawDistance)">
+			<attribute name="native"/>
+			<referrer name="LoadMapping_GameStart"/>
+			<param name="modelid">
+			</param>
+			<param name="X">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="Y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="Z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="DrawDistance">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:CreateVehicle" syntax="CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay)">
+			<attribute name="native"/>
+			<referrer name="cmd_veh"/>
+			<param name="vehicletype">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rotation">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="color1">
+			</param>
+			<param name="color2">
+			</param>
+			<param name="respawn_delay">
+			</param>
+		</member>
+		<member name="M:DC_CMD" syntax="DC_CMD(playerid, cmdtext[])">
+			<attribute name="native"/>
+			<referrer name="OnPlayerCommandText"/>
+			<param name="playerid">
+			</param>
+			<param name="cmdtext">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:DC_CMD_Init" syntax="DC_CMD_Init(script_type)">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnFilterScriptInit"/>
+			<referrer name="SSCANF_OnGameModeInit"/>
+			<param name="script_type">
+				<paraminfo>dc_cmd_script_type </paraminfo>
+			</param>
+		</member>
+		<member name="M:DelayedKick" syntax="DelayedKick(playerid, time)">
+			<stacksize value="7"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnDialogResponse"/>
+			<dependency name="SetTimerEx"/>
+			<dependency name="false"/>
+			<param name="playerid">
+			</param>
+			<param name="time">
+			</param>
+		</member>
+		<member name="M:DisableInteriorEnterExits" syntax="DisableInteriorEnterExits()">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+		</member>
+		<member name="M:EnableStuntBonusForAll" syntax="EnableStuntBonusForAll(enable)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="enable">
+			</param>
+		</member>
+		<member name="M:FIXES_ExtractIp" syntax="FIXES_ExtractIp(str[])">
+			<stacksize value="28"/>
+			<dependency name="FIXES_ReadIp"/>
+			<dependency name="sscanf"/>
+			<param name="str">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:FIXES_ReadIp" syntax="FIXES_ReadIp(str[])">
+			<stacksize value="6"/>
+			<referrer name="FIXES_ExtractIp"/>
+			<dependency name="FIXES_ReadIp"/>
+			<dependency name="sscanf"/>
+			<dependency name="strfind"/>
+			<param name="str">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:FIXES_SilentBanIP" syntax="FIXES_SilentBanIP(ip[])">
+			<stacksize value="6"/>
+			<dependency name="SendRconCommand"/>
+			<dependency name="format"/>
+			<dependency name="printf"/>
+			<param name="ip">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:FIXES_SilentBanPlayer" syntax="FIXES_SilentBanPlayer(playerid)">
+			<stacksize value="6"/>
+			<dependency name="GetPlayerIp"/>
+			<dependency name="SendRconCommand"/>
+			<dependency name="format"/>
+			<dependency name="printf"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:GameModeExit" syntax="GameModeExit()">
+			<attribute name="native"/>
+			<referrer name="cmd_gmx"/>
+		</member>
+		<member name="M:GameTextForPlayer" syntax="GameTextForPlayer(playerid, string[], time, style)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<referrer name="cmd_gmx"/>
+			<param name="playerid">
+			</param>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="time">
+			</param>
+			<param name="style">
+			</param>
+		</member>
+		<member name="M:GetMaxPlayers" syntax="GetMaxPlayers()">
+			<attribute name="native"/>
+			<referrer name="OnFilterScriptInit"/>
+			<referrer name="OnGameModeInit"/>
+		</member>
+		<member name="M:GetPlayerIp" syntax="GetPlayerIp(playerid, name[], len)">
+			<attribute name="native"/>
+			<referrer name="FIXES_SilentBanPlayer"/>
+			<referrer name="OnDialogResponse"/>
+			<param name="playerid">
+			</param>
+			<param name="name">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="len">
+			</param>
+		</member>
+		<member name="M:GetPlayerName" syntax="GetPlayerName(playerid, name[], len)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerConnect"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<param name="playerid">
+			</param>
+			<param name="name">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="len">
+			</param>
+		</member>
+		<member name="M:GetPlayerPos" syntax="GetPlayerPos(playerid, &amp;x, &amp;y, &amp;z)">
+			<attribute name="native"/>
+			<referrer name="cmd_veh"/>
+			<param name="playerid">
+			</param>
+			<param name="x">
+				<paraminfo>Float &amp; </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float &amp; </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float &amp; </paraminfo>
+			</param>
+		</member>
+		<member name="M:GetPlayerPosPlace" syntax="GetPlayerPosPlace(playerid)">
+			<stacksize value="7"/>
+			<dependency name="IsPlayerInDynamicArea"/>
+			<dependency name="zones"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:GivePlayerMoney" syntax="GivePlayerMoney(playerid, money)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+			<param name="money">
+			</param>
+		</member>
+		<member name="M:GivePlayerWeapon" syntax="GivePlayerWeapon(playerid, weaponid, ammo)">
+			<attribute name="native"/>
+			<referrer name="cmd_givegun"/>
+			<param name="playerid">
+			</param>
+			<param name="weaponid">
+			</param>
+			<param name="ammo">
+			</param>
+		</member>
+		<member name="M:IsPlayerConnected" syntax="IsPlayerConnected(playerid)">
+			<attribute name="native"/>
+			<referrer name="OnGameModeExit"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:IsPlayerInDynamicArea" syntax="IsPlayerInDynamicArea(playerid, areaid, recheck)">
+			<attribute name="native"/>
+			<referrer name="GetPlayerPosPlace"/>
+			<param name="playerid">
+			</param>
+			<param name="areaid">
+			</param>
+			<param name="recheck">
+			</param>
+		</member>
+		<member name="M:IsPlayerNPC" syntax="IsPlayerNPC(playerid)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerConnect"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:Kick" syntax="Kick(playerid)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<referrer name="KickAndQuit"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:KickAndQuit" syntax="KickAndQuit(playerid)">
+			<stacksize value="5"/>
+			<referrer name="OnPlayerSpawn"/>
+			<referrer name="OnDialogResponse"/>
+			<referrer name="_KickPlayerDelayed"/>
+			<referrer name="cmd_kick"/>
+			<referrer name="cmd_ban"/>
+			<dependency name="Kick"/>
+			<dependency name="SendClientMessage"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:LimitPlayerMarkerRadius" syntax="LimitPlayerMarkerRadius(marker_radius)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="marker_radius">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:LoadMapping_GameStart" syntax="LoadMapping_GameStart()">
+			<attribute name="public"/>
+			<stacksize value="13"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<dependency name="CreateObject"/>
+			<dependency name="FLASHER"/>
+			<dependency name="OBJECTS"/>
+			<dependency name="SetObjectMaterialText"/>
+		</member>
+		<member name="M:OnDialogResponse" syntax="OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])">
+			<attribute name="public"/>
+			<stacksize value="42"/>
+			<dependency name="DIALOG_LOGIN"/>
+			<dependency name="DIALOG_REGISTER"/>
+			<dependency name="DIALOG_UNUSED"/>
+			<dependency name="DelayedKick"/>
+			<dependency name="GetPlayerIp"/>
+			<dependency name="HP"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="KickAndQuit"/>
+			<dependency name="Level"/>
+			<dependency name="LoginAttempts"/>
+			<dependency name="Money"/>
+			<dependency name="MySQL_Handle"/>
+			<dependency name="ORM_ID"/>
+			<dependency name="Password"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="Reg_IP"/>
+			<dependency name="ShowPlayerDialog"/>
+			<dependency name="Welcome"/>
+			<dependency name="email"/>
+			<dependency name="md5"/>
+			<dependency name="mysql_escape_string"/>
+			<dependency name="orm_save"/>
+			<dependency name="phone"/>
+			<dependency name="strcmp"/>
+			<dependency name="strlen"/>
+			<dependency name="true"/>
+			<param name="playerid">
+			</param>
+			<param name="dialogid">
+			</param>
+			<param name="response">
+			</param>
+			<param name="listitem">
+			</param>
+			<param name="inputtext">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnDynamicObjectMoved" syntax="OnDynamicObjectMoved(objectid)">
+			<stacksize value="1"/>
+			<param name="objectid">
+			</param>
+		</member>
+		<member name="M:OnEnterExitModShop" syntax="OnEnterExitModShop(playerid, enterexit, interiorid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="enterexit">
+			</param>
+			<param name="interiorid">
+			</param>
+		</member>
+		<member name="M:OnFilterScriptExit" syntax="OnFilterScriptExit()">
+			<stacksize value="1"/>
+		</member>
+		<member name="M:OnFilterScriptInit" syntax="OnFilterScriptInit()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="GetMaxPlayers"/>
+			<dependency name="SSCANF_Init"/>
+			<dependency name="SSCANF_gInit"/>
+			<dependency name="true"/>
+		</member>
+		<member name="M:OnGameModeExit" syntax="OnGameModeExit()">
+			<attribute name="public"/>
+			<stacksize value="8"/>
+			<dependency name="ID"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="IsPlayerConnected"/>
+			<dependency name="ORM_ID"/>
+			<dependency name="Player"/>
+			<dependency name="mysql_close"/>
+			<dependency name="orm_save"/>
+		</member>
+		<member name="M:OnGameModeInit" syntax="OnGameModeInit()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="GetMaxPlayers"/>
+			<dependency name="SSCANF_Init"/>
+			<dependency name="SSCANF_gInit"/>
+			<dependency name="true"/>
+		</member>
+		<member name="M:OnObjectMoved" syntax="OnObjectMoved(objectid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="objectid">
+			</param>
+		</member>
+		<member name="M:OnPlayerClickMap" syntax="OnPlayerClickMap(playerid, fX, fY, fZ)">
+			<attribute name="public"/>
+			<stacksize value="264"/>
+			<dependency name="operator+(Float:,_:)"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="SetPlayerPosFindZ"/>
+			<dependency name="format"/>
+			<param name="playerid">
+			</param>
+			<param name="fX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerClickPlayer" syntax="OnPlayerClickPlayer(playerid, clickedplayerid, source)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="clickedplayerid">
+			</param>
+			<param name="source">
+			</param>
+		</member>
+		<member name="M:OnPlayerClickPlayerTextDraw" syntax="OnPlayerClickPlayerTextDraw(playerid, playertextid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="playertextid">
+				<paraminfo>PlayerText </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerClickTextDraw" syntax="OnPlayerClickTextDraw(playerid, clickedid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="clickedid">
+				<paraminfo>Text </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerCommandText" syntax="OnPlayerCommandText(playerid, cmdtext[])">
+			<attribute name="public"/>
+			<stacksize value="4"/>
+			<dependency name="DC_CMD"/>
+			<param name="playerid">
+			</param>
+			<param name="cmdtext">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerConnect" syntax="OnPlayerConnect(playerid)">
+			<attribute name="public"/>
+			<stacksize value="29"/>
+			<dependency name="GetPlayerName"/>
+			<dependency name="IsPlayerNPC"/>
+			<dependency name="SSCANF_Join"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerDataLoaded" syntax="OnPlayerDataLoaded(playerid, race_check)">
+			<attribute name="public"/>
+			<stacksize value="553"/>
+			<dependency name="DIALOG_LOGIN"/>
+			<dependency name="DIALOG_REGISTER"/>
+			<dependency name="ERROR_NO_DATA"/>
+			<dependency name="ERROR_OK"/>
+			<dependency name="IsRegistered"/>
+			<dependency name="Kick"/>
+			<dependency name="MySQL_RACE_CHECK"/>
+			<dependency name="Name"/>
+			<dependency name="ORM_ID"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="SetPlayerCameraLookAt"/>
+			<dependency name="SetPlayerCameraPos"/>
+			<dependency name="ShowPlayerDialog"/>
+			<dependency name="false"/>
+			<dependency name="format"/>
+			<dependency name="orm_errno"/>
+			<dependency name="orm_setkey"/>
+			<dependency name="true"/>
+			<param name="playerid">
+			</param>
+			<param name="race_check">
+			</param>
+		</member>
+		<member name="M:OnPlayerDeath" syntax="OnPlayerDeath(playerid, killerid, reason)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="killerid">
+			</param>
+			<param name="reason">
+			</param>
+		</member>
+		<member name="M:OnPlayerDisconnect" syntax="OnPlayerDisconnect(playerid, reason)">
+			<attribute name="public"/>
+			<stacksize value="3"/>
+			<dependency name="SSCANF_Leave"/>
+			<param name="playerid">
+			</param>
+			<param name="reason">
+			</param>
+		</member>
+		<member name="M:OnPlayerEditAttachedObject" syntax="OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="response">
+			</param>
+			<param name="index">
+			</param>
+			<param name="modelid">
+			</param>
+			<param name="boneid">
+			</param>
+			<param name="fOffsetX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fOffsetY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fOffsetZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRotX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRotY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRotZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fScaleX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fScaleY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fScaleZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerEditDynamicObject" syntax="OnPlayerEditDynamicObject(playerid, objectid, response, x, y, z, rx, ry, rz)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="objectid">
+			</param>
+			<param name="response">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rx">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="ry">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rz">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerEditObject" syntax="OnPlayerEditObject(playerid, playerobject, objectid, response, fX, fY, fZ, fRotX, fRotY, fRotZ)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="playerobject">
+			</param>
+			<param name="objectid">
+			</param>
+			<param name="response">
+			</param>
+			<param name="fX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRotX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRotY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRotZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerEnterCheckpoint" syntax="OnPlayerEnterCheckpoint(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerEnterDynamicArea" syntax="OnPlayerEnterDynamicArea(playerid, areaid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="areaid">
+			</param>
+		</member>
+		<member name="M:OnPlayerEnterDynamicCP" syntax="OnPlayerEnterDynamicCP(playerid, checkpointid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="checkpointid">
+			</param>
+		</member>
+		<member name="M:OnPlayerEnterDynamicRaceCP" syntax="OnPlayerEnterDynamicRaceCP(playerid, checkpointid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="checkpointid">
+			</param>
+		</member>
+		<member name="M:OnPlayerEnterRaceCheckpoint" syntax="OnPlayerEnterRaceCheckpoint(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerEnterVehicle" syntax="OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="vehicleid">
+			</param>
+			<param name="ispassenger">
+			</param>
+		</member>
+		<member name="M:OnPlayerExitVehicle" syntax="OnPlayerExitVehicle(playerid, vehicleid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="vehicleid">
+			</param>
+		</member>
+		<member name="M:OnPlayerExitedMenu" syntax="OnPlayerExitedMenu(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerGiveDamage" syntax="OnPlayerGiveDamage(playerid, damagedid, amount, weaponid, bodypart)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="damagedid">
+			</param>
+			<param name="amount">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="weaponid">
+			</param>
+			<param name="bodypart">
+			</param>
+		</member>
+		<member name="M:OnPlayerInteriorChange" syntax="OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="newinteriorid">
+			</param>
+			<param name="oldinteriorid">
+			</param>
+		</member>
+		<member name="M:OnPlayerKeyStateChange" syntax="OnPlayerKeyStateChange(playerid, newkeys, oldkeys)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="newkeys">
+			</param>
+			<param name="oldkeys">
+			</param>
+		</member>
+		<member name="M:OnPlayerLeaveCheckpoint" syntax="OnPlayerLeaveCheckpoint(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerLeaveDynamicArea" syntax="OnPlayerLeaveDynamicArea(playerid, areaid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="areaid">
+			</param>
+		</member>
+		<member name="M:OnPlayerLeaveDynamicCP" syntax="OnPlayerLeaveDynamicCP(playerid, checkpointid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="checkpointid">
+			</param>
+		</member>
+		<member name="M:OnPlayerLeaveDynamicRaceCP" syntax="OnPlayerLeaveDynamicRaceCP(playerid, checkpointid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="checkpointid">
+			</param>
+		</member>
+		<member name="M:OnPlayerLeaveRaceCheckpoint" syntax="OnPlayerLeaveRaceCheckpoint(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerObjectMoved" syntax="OnPlayerObjectMoved(playerid, objectid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="objectid">
+			</param>
+		</member>
+		<member name="M:OnPlayerPickUpDynamicPickup" syntax="OnPlayerPickUpDynamicPickup(playerid, pickupid)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="pickupid">
+			</param>
+		</member>
+		<member name="M:OnPlayerPickUpPickup" syntax="OnPlayerPickUpPickup(playerid, pickupid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="pickupid">
+			</param>
+		</member>
+		<member name="M:OnPlayerRegister" syntax="OnPlayerRegister(playerid)">
+			<attribute name="public"/>
+			<stacksize value="4"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="IsRegistered"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="Welcome"/>
+			<dependency name="true"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerRequestClass" syntax="OnPlayerRequestClass(playerid, classid)">
+			<attribute name="public"/>
+			<stacksize value="7"/>
+			<dependency name="SetPlayerCameraLookAt"/>
+			<dependency name="SetPlayerCameraPos"/>
+			<param name="playerid">
+			</param>
+			<param name="classid">
+			</param>
+		</member>
+		<member name="M:OnPlayerRequestSpawn" syntax="OnPlayerRequestSpawn(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerSelectDynamicObject" syntax="OnPlayerSelectDynamicObject(playerid, objectid, modelid, x, y, z)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="objectid">
+			</param>
+			<param name="modelid">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerSelectObject" syntax="OnPlayerSelectObject(playerid, type, objectid, modelid, fX, fY, fZ)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="type">
+			</param>
+			<param name="objectid">
+			</param>
+			<param name="modelid">
+			</param>
+			<param name="fX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerSelectedMenuRow" syntax="OnPlayerSelectedMenuRow(playerid, row)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="row">
+			</param>
+		</member>
+		<member name="M:OnPlayerShootDynamicObject" syntax="OnPlayerShootDynamicObject(playerid, weaponid, objectid, x, y, z)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="weaponid">
+			</param>
+			<param name="objectid">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerSpawn" syntax="OnPlayerSpawn(playerid)">
+			<attribute name="public"/>
+			<stacksize value="56"/>
+			<dependency name="DIALOG_UNUSED"/>
+			<dependency name="GameTextForPlayer"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="KickAndQuit"/>
+			<dependency name="Name"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="SetCameraBehindPlayer"/>
+			<dependency name="SetPlayerFacingAngle"/>
+			<dependency name="SetPlayerInterior"/>
+			<dependency name="SetPlayerPos"/>
+			<dependency name="SetPlayerVirtualWorld"/>
+			<dependency name="ShowPlayerDialog"/>
+			<dependency name="format"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerStateChange" syntax="OnPlayerStateChange(playerid, newstate, oldstate)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="newstate">
+			</param>
+			<param name="oldstate">
+			</param>
+		</member>
+		<member name="M:OnPlayerStreamIn" syntax="OnPlayerStreamIn(playerid, forplayerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="forplayerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerStreamOut" syntax="OnPlayerStreamOut(playerid, forplayerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="forplayerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerTakeDamage" syntax="OnPlayerTakeDamage(playerid, issuerid, amount, weaponid, bodypart)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="issuerid">
+			</param>
+			<param name="amount">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="weaponid">
+			</param>
+			<param name="bodypart">
+			</param>
+		</member>
+		<member name="M:OnPlayerText" syntax="OnPlayerText(playerid, text[])">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="text">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnPlayerUpdate" syntax="OnPlayerUpdate(playerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnPlayerWeaponShot" syntax="OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, fX, fY, fZ)">
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="weaponid">
+			</param>
+			<param name="hittype">
+			</param>
+			<param name="hitid">
+			</param>
+			<param name="fX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnQueryError" syntax="OnQueryError(errorid, error[], callback[], query[], connectionHandle)">
+			<stacksize value="1"/>
+			<param name="errorid">
+			</param>
+			<param name="error">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="callback">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="query">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="connectionHandle">
+			</param>
+		</member>
+		<member name="M:OnRconCommand" syntax="OnRconCommand(cmd[])">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="cmd">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnRconLoginAttempt" syntax="OnRconLoginAttempt(ip[], password[], success)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="ip">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="password">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="success">
+			</param>
+		</member>
+		<member name="M:OnServerMessage" syntax="OnServerMessage(msg[])">
+			<stacksize value="1"/>
+			<param name="msg">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnUnoccupiedVehicleUpdate" syntax="OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, new_x, new_y, new_z)">
+			<stacksize value="1"/>
+			<param name="vehicleid">
+			</param>
+			<param name="playerid">
+			</param>
+			<param name="passenger_seat">
+			</param>
+			<param name="new_x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="new_y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="new_z">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:OnVehicleDamageStatusUpdate" syntax="OnVehicleDamageStatusUpdate(vehicleid, playerid)">
+			<stacksize value="1"/>
+			<param name="vehicleid">
+			</param>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:OnVehicleDeath" syntax="OnVehicleDeath(vehicleid, killerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="vehicleid">
+			</param>
+			<param name="killerid">
+			</param>
+		</member>
+		<member name="M:OnVehicleMod" syntax="OnVehicleMod(playerid, vehicleid, componentid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="vehicleid">
+			</param>
+			<param name="componentid">
+			</param>
+		</member>
+		<member name="M:OnVehiclePaintjob" syntax="OnVehiclePaintjob(playerid, vehicleid, paintjobid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="vehicleid">
+			</param>
+			<param name="paintjobid">
+			</param>
+		</member>
+		<member name="M:OnVehicleRespray" syntax="OnVehicleRespray(playerid, vehicleid, color1, color2)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="vehicleid">
+			</param>
+			<param name="color1">
+			</param>
+			<param name="color2">
+			</param>
+		</member>
+		<member name="M:OnVehicleSpawn" syntax="OnVehicleSpawn(vehicleid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="vehicleid">
+			</param>
+		</member>
+		<member name="M:OnVehicleStreamIn" syntax="OnVehicleStreamIn(vehicleid, forplayerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="vehicleid">
+			</param>
+			<param name="forplayerid">
+			</param>
+		</member>
+		<member name="M:OnVehicleStreamOut" syntax="OnVehicleStreamOut(vehicleid, forplayerid)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="vehicleid">
+			</param>
+			<param name="forplayerid">
+			</param>
+		</member>
+		<member name="M:PreloadAnimLib" syntax="PreloadAnimLib(playerid, animlib[])">
+			<stacksize value="12"/>
+			<referrer name="Welcome"/>
+			<dependency name="ApplyAnimation"/>
+			<param name="playerid">
+			</param>
+			<param name="animlib">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:RegisterAlt" syntax="RegisterAlt(command[], alt1[], ...)">
+			<attribute name="native"/>
+			<referrer name="alt_gmx"/>
+			<referrer name="alt_veh"/>
+			<referrer name="alt_givegun"/>
+			<referrer name="alt_kick"/>
+			<referrer name="alt_ban"/>
+			<param name="command">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="alt1">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+			</param>
+		</member>
+		<member name="M:RemoveBuildingForPlayer" syntax="RemoveBuildingForPlayer(playerid, modelid, fX, fY, fZ, fRadius)">
+			<attribute name="native"/>
+			<referrer name="RemoveBuldsForPlayer"/>
+			<param name="playerid">
+			</param>
+			<param name="modelid">
+			</param>
+			<param name="fX">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fY">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fZ">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="fRadius">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:RemoveBuldsForPlayer" syntax="RemoveBuldsForPlayer(playerid)">
+			<attribute name="public"/>
+			<stacksize value="8"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<dependency name="RemoveBuildingForPlayer"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:ResetPlayerMoney" syntax="ResetPlayerMoney(playerid)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:SSCANF_Init" syntax="SSCANF_Init(players, invalid, len)">
+			<attribute name="native"/>
+			<referrer name="OnFilterScriptInit"/>
+			<referrer name="OnGameModeInit"/>
+			<param name="players">
+			</param>
+			<param name="invalid">
+			</param>
+			<param name="len">
+			</param>
+		</member>
+		<member name="M:SSCANF_Join" syntax="SSCANF_Join(playerid, name[], npc)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerConnect"/>
+			<param name="playerid">
+			</param>
+			<param name="name">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="npc">
+			</param>
+		</member>
+		<member name="M:SSCANF_Leave" syntax="SSCANF_Leave(playerid)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerDisconnect"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:SSCANF_OnFilterScriptInit" syntax="SSCANF_OnFilterScriptInit()">
+			<attribute name="public"/>
+			<stacksize value="3"/>
+			<dependency name="DC_CMD_Init"/>
+			<dependency name="dc_cmd_filterscript"/>
+		</member>
+		<member name="M:SSCANF_OnGameModeInit" syntax="SSCANF_OnGameModeInit()">
+			<attribute name="public"/>
+			<stacksize value="3"/>
+			<dependency name="DC_CMD_Init"/>
+			<dependency name="dc_cmd_gamemode"/>
+		</member>
+		<member name="M:SSCANF_OnPlayerConnect" syntax="SSCANF_OnPlayerConnect(playerid)">
+			<attribute name="public"/>
+			<stacksize value="8"/>
+			<dependency name="BanEnd"/>
+			<dependency name="DelayedKick"/>
+			<dependency name="E_PLAYERS"/>
+			<dependency name="GetPlayerName"/>
+			<dependency name="ID"/>
+			<dependency name="Money"/>
+			<dependency name="MySQL_Conneced"/>
+			<dependency name="MySQL_Handle"/>
+			<dependency name="MySQL_RACE_CHECK"/>
+			<dependency name="Name"/>
+			<dependency name="ORM_ID"/>
+			<dependency name="Password"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="RemoveBuldsForPlayer"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="email"/>
+			<dependency name="mysql_escape_string"/>
+			<dependency name="orm_addvar_int"/>
+			<dependency name="orm_addvar_string"/>
+			<dependency name="orm_create"/>
+			<dependency name="orm_load"/>
+			<dependency name="orm_setkey"/>
+			<dependency name="phone"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:SSCANF_OnPlayerDisconnect" syntax="SSCANF_OnPlayerDisconnect(playerid, reason)">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="reason">
+			</param>
+		</member>
+		<member name="M:SendClientMessage" syntax="SendClientMessage(playerid, color, message[])">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnPlayerClickMap"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<referrer name="KickAndQuit"/>
+			<referrer name="cmd_veh"/>
+			<referrer name="cmd_givegun"/>
+			<referrer name="cmd_time"/>
+			<referrer name="cmd_kick"/>
+			<referrer name="cmd_ban"/>
+			<param name="playerid">
+			</param>
+			<param name="color">
+			</param>
+			<param name="message">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:SendClientMessageToAll" syntax="SendClientMessageToAll(color, message[])">
+			<attribute name="native"/>
+			<referrer name="cmd_gmx"/>
+			<referrer name="cmd_kick"/>
+			<referrer name="cmd_ban"/>
+			<param name="color">
+			</param>
+			<param name="message">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:SendRconCommand" syntax="SendRconCommand(command[])">
+			<attribute name="native"/>
+			<referrer name="FIXES_SilentBanPlayer"/>
+			<referrer name="FIXES_SilentBanIP"/>
+			<param name="command">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:SetCameraBehindPlayer" syntax="SetCameraBehindPlayer(playerid)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:SetObjectMaterialText" syntax="SetObjectMaterialText(objectid, text[], materialindex, materialsize, fontface[], fontsize, bold, fontcolor, backcolor, textalignment)">
+			<attribute name="native"/>
+			<referrer name="LoadMapping_GameStart"/>
+			<param name="objectid">
+			</param>
+			<param name="text">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="materialindex">
+			</param>
+			<param name="materialsize">
+			</param>
+			<param name="fontface">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="fontsize">
+			</param>
+			<param name="bold">
+			</param>
+			<param name="fontcolor">
+			</param>
+			<param name="backcolor">
+			</param>
+			<param name="textalignment">
+			</param>
+		</member>
+		<member name="M:SetPlayerCameraLookAt" syntax="SetPlayerCameraLookAt(playerid, x, y, z, cut)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerRequestClass"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<param name="playerid">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="cut">
+			</param>
+		</member>
+		<member name="M:SetPlayerCameraPos" syntax="SetPlayerCameraPos(playerid, x, y, z)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerRequestClass"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<param name="playerid">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:SetPlayerFacingAngle" syntax="SetPlayerFacingAngle(playerid, ang)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<param name="playerid">
+			</param>
+			<param name="ang">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:SetPlayerHealth" syntax="SetPlayerHealth(playerid, health)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+			<param name="health">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:SetPlayerInterior" syntax="SetPlayerInterior(playerid, interiorid)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<param name="playerid">
+			</param>
+			<param name="interiorid">
+			</param>
+		</member>
+		<member name="M:SetPlayerPos" syntax="SetPlayerPos(playerid, x, y, z)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<param name="playerid">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:SetPlayerPosFindZ" syntax="SetPlayerPosFindZ(playerid, x, y, z)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerClickMap"/>
+			<param name="playerid">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:SetPlayerVirtualWorld" syntax="SetPlayerVirtualWorld(playerid, worldid)">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<param name="playerid">
+			</param>
+			<param name="worldid">
+			</param>
+		</member>
+		<member name="M:SetPlayerWantedLevel" syntax="SetPlayerWantedLevel(playerid, level)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+			<param name="level">
+			</param>
+		</member>
+		<member name="M:SetSpawnInfo" syntax="SetSpawnInfo(playerid, team, skin, x, y, z, rotation, weapon1, weapon1_ammo, weapon2, weapon2_ammo, weapon3, weapon3_ammo)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+			<param name="team">
+			</param>
+			<param name="skin">
+			</param>
+			<param name="x">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="y">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="z">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="rotation">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="weapon1">
+			</param>
+			<param name="weapon1_ammo">
+			</param>
+			<param name="weapon2">
+			</param>
+			<param name="weapon2_ammo">
+			</param>
+			<param name="weapon3">
+			</param>
+			<param name="weapon3_ammo">
+			</param>
+		</member>
+		<member name="M:SetTimerEx" syntax="SetTimerEx(funcname[], interval, repeating, format[], ...)">
+			<attribute name="native"/>
+			<referrer name="DelayedKick"/>
+			<param name="funcname">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="interval">
+			</param>
+			<param name="repeating">
+			</param>
+			<param name="format">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+				<paraminfo> {Float,_} </paraminfo>
+			</param>
+		</member>
+		<member name="M:ShowPlayerDialog" syntax="ShowPlayerDialog(playerid, dialogid, style, caption[], info[], button1[], button2[])">
+			<attribute name="native"/>
+			<referrer name="OnPlayerSpawn"/>
+			<referrer name="OnDialogResponse"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<param name="playerid">
+			</param>
+			<param name="dialogid">
+			</param>
+			<param name="style">
+			</param>
+			<param name="caption">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="info">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="button1">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="button2">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:SpawnPlayer" syntax="SpawnPlayer(playerid)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:SpawningCar_Army" syntax="SpawningCar_Army()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="F_ARMY_AIR"/>
+			<dependency name="F_ARMY_HEAD"/>
+			<dependency name="F_ARMY_LAND"/>
+			<dependency name="F_ARMY_SUPPLY"/>
+			<dependency name="F_ARMY_WATER"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Bus" syntax="SpawningCar_Bus()">
+			<stacksize value="1"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+		</member>
+		<member name="M:SpawningCar_Delivery" syntax="SpawningCar_Delivery()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="DELIVERY_GOODS_TRAILER"/>
+			<dependency name="DELIVERY_GOODS_TRAIN"/>
+			<dependency name="DELIVERY_GOODS_WAGON"/>
+			<dependency name="DELIVERY_OIL_TRAILER"/>
+			<dependency name="DELIVERY_OIL_TRAIN"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Factory" syntax="SpawningCar_Factory()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="FACTORY_TRAILER"/>
+			<dependency name="FACTORY_TRAIN"/>
+			<dependency name="FACTORY_WAGON"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Fire" syntax="SpawningCar_Fire()">
+			<stacksize value="9"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicle"/>
+			<dependency name="FIRE_LS"/>
+			<dependency name="FIRE_LV"/>
+			<dependency name="FIRE_SF"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Goverment" syntax="SpawningCar_Goverment()">
+			<stacksize value="1"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+		</member>
+		<member name="M:SpawningCar_Mafia" syntax="SpawningCar_Mafia()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="F_AZTECAS"/>
+			<dependency name="F_BALLAS"/>
+			<dependency name="F_COSANOSTRA"/>
+			<dependency name="F_GROVE"/>
+			<dependency name="F_RIFA"/>
+			<dependency name="F_RUSSIAN"/>
+			<dependency name="F_VAGOS"/>
+			<dependency name="F_YAKUZA"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Mechanic" syntax="SpawningCar_Mechanic()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="MECHANIC"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Media" syntax="SpawningCar_Media()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="F_MEDIA_HEAD"/>
+			<dependency name="F_MEDIA_R_LS"/>
+			<dependency name="F_MEDIA_R_LV"/>
+			<dependency name="F_MEDIA_R_SF"/>
+			<dependency name="F_MEDIA_TV"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Medicine" syntax="SpawningCar_Medicine()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="F_MED_HEAD"/>
+			<dependency name="F_MED_LS"/>
+			<dependency name="F_MED_LV"/>
+			<dependency name="F_MED_SF"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Police" syntax="SpawningCar_Police()">
+			<stacksize value="10"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+			<dependency name="Float:operator=(_:)"/>
+			<dependency name="AddStaticVehicleEx"/>
+			<dependency name="AttachObjectToVehicle"/>
+			<dependency name="FLASHER"/>
+			<dependency name="F_POLICE_FBI"/>
+			<dependency name="F_POLICE_HEAD"/>
+			<dependency name="F_POLICE_LS"/>
+			<dependency name="F_POLICE_LV"/>
+			<dependency name="F_POLICE_SF"/>
+			<dependency name="OBJECTS"/>
+			<dependency name="SpawningCars"/>
+			<dependency name="SpawningCars"/>
+		</member>
+		<member name="M:SpawningCar_Taxi" syntax="SpawningCar_Taxi()">
+			<stacksize value="1"/>
+			<referrer name="AddSpawningCar_GameStart"/>
+		</member>
+		<member name="M:StopAudioStreamForPlayer" syntax="StopAudioStreamForPlayer(playerid)">
+			<attribute name="native"/>
+			<referrer name="Welcome"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:Welcome" syntax="Welcome(playerid)">
+			<stacksize value="15"/>
+			<referrer name="OnDialogResponse"/>
+			<referrer name="OnPlayerRegister"/>
+			<dependency name="Float:operator=(_:)"/>
+			<dependency name="ApplyAnimation"/>
+			<dependency name="GivePlayerMoney"/>
+			<dependency name="Money"/>
+			<dependency name="Player"/>
+			<dependency name="PreloadAnimLib"/>
+			<dependency name="ResetPlayerMoney"/>
+			<dependency name="SetPlayerHealth"/>
+			<dependency name="SetPlayerWantedLevel"/>
+			<dependency name="SetSpawnInfo"/>
+			<dependency name="SpawnPlayer"/>
+			<dependency name="StopAudioStreamForPlayer"/>
+			<dependency name="Wanted"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:_KickPlayerDelayed" syntax="_KickPlayerDelayed(playerid)">
+			<attribute name="public"/>
+			<stacksize value="4"/>
+			<dependency name="KickAndQuit"/>
+			<param name="playerid">
+			</param>
+		</member>
+		<member name="M:alt_ban" syntax="alt_ban()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="RegisterAlt"/>
+		</member>
+		<member name="M:alt_givegun" syntax="alt_givegun()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="RegisterAlt"/>
+		</member>
+		<member name="M:alt_gmx" syntax="alt_gmx()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="RegisterAlt"/>
+		</member>
+		<member name="M:alt_kick" syntax="alt_kick()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="RegisterAlt"/>
+		</member>
+		<member name="M:alt_veh" syntax="alt_veh()">
+			<attribute name="public"/>
+			<stacksize value="5"/>
+			<dependency name="RegisterAlt"/>
+		</member>
+		<member name="M:cmd_ban" syntax="cmd_ban(playerid, params[])">
+			<attribute name="public"/>
+			<stacksize value="515"/>
+			<dependency name="BanEnd"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="KickAndQuit"/>
+			<dependency name="Name"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="SendClientMessageToAll"/>
+			<dependency name="date"/>
+			<dependency name="format"/>
+			<dependency name="gettime"/>
+			<dependency name="sscanf"/>
+			<param name="playerid">
+			</param>
+			<param name="params">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:cmd_givegun" syntax="cmd_givegun(playerid, params[])">
+			<attribute name="public"/>
+			<stacksize value="10"/>
+			<dependency name="GivePlayerWeapon"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="deleted_weapons"/>
+			<dependency name="sscanf"/>
+			<param name="playerid">
+			</param>
+			<param name="params">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:cmd_gmx" syntax="cmd_gmx(playerid, params[])">
+			<attribute name="public"/>
+			<stacksize value="6"/>
+			<dependency name="GameModeExit"/>
+			<dependency name="GameTextForPlayer"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessageToAll"/>
+			<param name="playerid">
+			</param>
+			<param name="params">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:cmd_kick" syntax="cmd_kick(playerid, params[])">
+			<attribute name="public"/>
+			<stacksize value="259"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="KickAndQuit"/>
+			<dependency name="Name"/>
+			<dependency name="Player"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="SendClientMessageToAll"/>
+			<dependency name="format"/>
+			<dependency name="sscanf"/>
+			<param name="playerid">
+			</param>
+			<param name="params">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:cmd_time" syntax="cmd_time(playerid, params[])">
+			<attribute name="public"/>
+			<stacksize value="265"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="date"/>
+			<dependency name="format"/>
+			<dependency name="gettime"/>
+			<dependency name="print"/>
+			<param name="playerid">
+			</param>
+			<param name="params">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:cmd_veh" syntax="cmd_veh(playerid, params[])">
+			<attribute name="public"/>
+			<stacksize value="16"/>
+			<dependency name="CreateVehicle"/>
+			<dependency name="GetPlayerPos"/>
+			<dependency name="IsLoggedIn"/>
+			<dependency name="Player"/>
+			<dependency name="SendClientMessage"/>
+			<dependency name="sscanf"/>
+			<param name="playerid">
+			</param>
+			<param name="params">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:date" syntax="date(formatStr[], timestamp)">
+			<stacksize value="154"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<referrer name="cmd_time"/>
+			<referrer name="cmd_ban"/>
+			<dependency name="date"/>
+			<dependency name="false"/>
+			<dependency name="format"/>
+			<dependency name="memcpy"/>
+			<dependency name="strfind"/>
+			<dependency name="strlen"/>
+			<dependency name="timestamp_to_date"/>
+			<param name="formatStr">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="timestamp">
+			</param>
+		</member>
+		<member name="M:date_to_timestamp" syntax="date_to_timestamp(year, month, day, hour, minute, second)">
+			<stacksize value="1"/>
+			<param name="year">
+			</param>
+			<param name="month">
+			</param>
+			<param name="day">
+			</param>
+			<param name="hour">
+			</param>
+			<param name="minute">
+			</param>
+			<param name="second">
+			</param>
+		</member>
+		<member name="M:dc_cmd_OnGameModeInit" syntax="dc_cmd_OnGameModeInit()">
+			<attribute name="public"/>
+			<stacksize value="138"/>
+			<dependency name="AddSpawningCar_GameStart"/>
+			<dependency name="AllowInteriorWeapons"/>
+			<dependency name="AntiDeAMX"/>
+			<dependency name="DisableInteriorEnterExits"/>
+			<dependency name="EnableStuntBonusForAll"/>
+			<dependency name="LOG_ERROR"/>
+			<dependency name="LOG_TYPE_HTML"/>
+			<dependency name="LOG_WARNING"/>
+			<dependency name="LimitPlayerMarkerRadius"/>
+			<dependency name="LoadMapping_GameStart"/>
+			<dependency name="MySQL_Conneced"/>
+			<dependency name="MySQL_Handle"/>
+			<dependency name="date"/>
+			<dependency name="date"/>
+			<dependency name="gettime"/>
+			<dependency name="mysql_connect"/>
+			<dependency name="mysql_errno"/>
+			<dependency name="mysql_log"/>
+			<dependency name="place_init"/>
+			<dependency name="print"/>
+			<dependency name="printf"/>
+		</member>
+		<member name="M:dc_cmd_OnPlayerCommandText" syntax="dc_cmd_OnPlayerCommandText(playerid, cmdtext[])">
+			<attribute name="public"/>
+			<stacksize value="1"/>
+			<param name="playerid">
+			</param>
+			<param name="cmdtext">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:float" syntax="float(value)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator*(Float:,_:)"/>
+			<referrer name="operator/(Float:,_:)"/>
+			<referrer name="operator/(_:,Float:)"/>
+			<referrer name="operator+(Float:,_:)"/>
+			<referrer name="operator-(Float:,_:)"/>
+			<referrer name="operator-(_:,Float:)"/>
+			<referrer name="operator==(Float:,_:)"/>
+			<referrer name="operator!=(Float:,_:)"/>
+			<referrer name="operator&gt;(Float:,_:)"/>
+			<referrer name="operator&gt;(_:,Float:)"/>
+			<referrer name="operator&gt;=(Float:,_:)"/>
+			<referrer name="operator&gt;=(_:,Float:)"/>
+			<referrer name="operator&lt;(Float:,_:)"/>
+			<referrer name="operator&lt;(_:,Float:)"/>
+			<referrer name="operator&lt;=(Float:,_:)"/>
+			<referrer name="operator&lt;=(_:,Float:)"/>
+			<param name="value">
+			</param>
+		</member>
+		<member name="M:floatadd" syntax="floatadd(oper1, oper2)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator+(Float:,_:)"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:floatcmp" syntax="floatcmp(oper1, oper2)">
+			<attribute name="native"/>
+			<referrer name="operator==(Float:,Float:)"/>
+			<referrer name="operator==(Float:,_:)"/>
+			<referrer name="operator!=(Float:,Float:)"/>
+			<referrer name="operator!=(Float:,_:)"/>
+			<referrer name="operator&gt;(Float:,Float:)"/>
+			<referrer name="operator&gt;(Float:,_:)"/>
+			<referrer name="operator&gt;(_:,Float:)"/>
+			<referrer name="operator&gt;=(Float:,Float:)"/>
+			<referrer name="operator&gt;=(Float:,_:)"/>
+			<referrer name="operator&gt;=(_:,Float:)"/>
+			<referrer name="operator&lt;(Float:,Float:)"/>
+			<referrer name="operator&lt;(Float:,_:)"/>
+			<referrer name="operator&lt;(_:,Float:)"/>
+			<referrer name="operator&lt;=(Float:,Float:)"/>
+			<referrer name="operator&lt;=(Float:,_:)"/>
+			<referrer name="operator&lt;=(_:,Float:)"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:floatdiv" syntax="floatdiv(dividend, divisor)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator/(Float:,_:)"/>
+			<referrer name="operator/(_:,Float:)"/>
+			<param name="dividend">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="divisor">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:floatmul" syntax="floatmul(oper1, oper2)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator*(Float:,_:)"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:floatsub" syntax="floatsub(oper1, oper2)">
+			<tagname value="Float"/>
+			<attribute name="native"/>
+			<referrer name="operator-(Float:,_:)"/>
+			<referrer name="operator-(_:,Float:)"/>
+			<param name="oper1">
+				<paraminfo>Float </paraminfo>
+			</param>
+			<param name="oper2">
+				<paraminfo>Float </paraminfo>
+			</param>
+		</member>
+		<member name="M:format" syntax="format(output[], len, format[], ...)">
+			<attribute name="native"/>
+			<referrer name="FIXES_SilentBanPlayer"/>
+			<referrer name="FIXES_SilentBanIP"/>
+			<referrer name="date"/>
+			<referrer name="OnPlayerSpawn"/>
+			<referrer name="OnPlayerClickMap"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<referrer name="cmd_time"/>
+			<referrer name="cmd_kick"/>
+			<referrer name="cmd_ban"/>
+			<param name="output">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="len">
+			</param>
+			<param name="format">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+				<paraminfo> {Float,_} </paraminfo>
+			</param>
+		</member>
+		<member name="M:gettime" syntax="gettime(&amp;hour, &amp;minute, &amp;second)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<referrer name="cmd_time"/>
+			<referrer name="cmd_ban"/>
+			<param name="hour">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="minute">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="second">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+		</member>
+		<member name="M:main" syntax="main()">
+			<attribute name="entry"/>
+			<stacksize value="1"/>
+		</member>
+		<member name="M:md5" syntax="md5(text[], hesh[])">
+			<attribute name="native"/>
+			<referrer name="OnDialogResponse"/>
+			<param name="text">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="hesh">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:memcpy" syntax="memcpy(dest[], source[], index, numbytes, maxlength)">
+			<attribute name="native"/>
+			<referrer name="date"/>
+			<param name="dest">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="source">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="index">
+			</param>
+			<param name="numbytes">
+			</param>
+			<param name="maxlength">
+			</param>
+		</member>
+		<member name="M:mysql_close" syntax="mysql_close(connectionHandle)">
+			<attribute name="native"/>
+			<referrer name="OnGameModeExit"/>
+			<param name="connectionHandle">
+			</param>
+		</member>
+		<member name="M:mysql_connect" syntax="mysql_connect(host[], user[], database[], password[], port, autoreconnect, pool_size)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="host">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="user">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="database">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="password">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="port">
+			</param>
+			<param name="autoreconnect">
+				<paraminfo>bool </paraminfo>
+			</param>
+			<param name="pool_size">
+			</param>
+		</member>
+		<member name="M:mysql_errno" syntax="mysql_errno(connectionHandle)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="connectionHandle">
+			</param>
+		</member>
+		<member name="M:mysql_escape_string" syntax="mysql_escape_string(source[], destination[], connectionHandle, max_len)">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnDialogResponse"/>
+			<param name="source">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="destination">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="connectionHandle">
+			</param>
+			<param name="max_len">
+			</param>
+		</member>
+		<member name="M:mysql_log" syntax="mysql_log(loglevel, logtype)">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="loglevel">
+				<paraminfo>E_LOGLEVEL </paraminfo>
+			</param>
+			<param name="logtype">
+				<paraminfo>E_LOGTYPE </paraminfo>
+			</param>
+		</member>
+		<member name="M:orm_addvar_int" syntax="orm_addvar_int(id, &amp;var, varname[])">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<param name="id">
+				<paraminfo>ORM </paraminfo>
+			</param>
+			<param name="var">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="varname">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:orm_addvar_string" syntax="orm_addvar_string(id, var[], var_maxlen, varname[])">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<param name="id">
+				<paraminfo>ORM </paraminfo>
+			</param>
+			<param name="var">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="var_maxlen">
+			</param>
+			<param name="varname">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:orm_create" syntax="orm_create(table[], connectionHandle)">
+			<tagname value="ORM"/>
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<param name="table">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="connectionHandle">
+			</param>
+		</member>
+		<member name="M:orm_errno" syntax="orm_errno(id)">
+			<tagname value="ORM_Error"/>
+			<attribute name="native"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<param name="id">
+				<paraminfo>ORM </paraminfo>
+			</param>
+		</member>
+		<member name="M:orm_load" syntax="orm_load(id, callback[], format[], ...)">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<param name="id">
+				<paraminfo>ORM </paraminfo>
+			</param>
+			<param name="callback">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="format">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+				<paraminfo> {Float,_} </paraminfo>
+			</param>
+		</member>
+		<member name="M:orm_save" syntax="orm_save(id, callback[], format[], ...)">
+			<attribute name="native"/>
+			<referrer name="OnGameModeExit"/>
+			<referrer name="OnDialogResponse"/>
+			<param name="id">
+				<paraminfo>ORM </paraminfo>
+			</param>
+			<param name="callback">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="format">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+				<paraminfo> {Float,_} </paraminfo>
+			</param>
+		</member>
+		<member name="M:orm_setkey" syntax="orm_setkey(id, varname[])">
+			<attribute name="native"/>
+			<referrer name="SSCANF_OnPlayerConnect"/>
+			<referrer name="OnPlayerDataLoaded"/>
+			<param name="id">
+				<paraminfo>ORM </paraminfo>
+			</param>
+			<param name="varname">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:place_init" syntax="place_init()">
+			<stacksize value="9"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<dependency name="CreateDynamicPolygon"/>
+			<dependency name="ZONE_LS"/>
+			<dependency name="ZONE_LV"/>
+			<dependency name="ZONE_SF"/>
+			<dependency name="zones"/>
+		</member>
+		<member name="M:print" syntax="print(string[])">
+			<attribute name="native"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<referrer name="cmd_time"/>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:printf" syntax="printf(format[], ...)">
+			<attribute name="native"/>
+			<referrer name="FIXES_SilentBanPlayer"/>
+			<referrer name="FIXES_SilentBanIP"/>
+			<referrer name="dc_cmd_OnGameModeInit"/>
+			<param name="format">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+				<paraminfo> {Float,_} </paraminfo>
+			</param>
+		</member>
+		<member name="M:sscanf" syntax="sscanf(data[], format[], ...)">
+			<attribute name="native"/>
+			<referrer name="FIXES_ReadIp"/>
+			<referrer name="FIXES_ExtractIp"/>
+			<referrer name="cmd_veh"/>
+			<referrer name="cmd_givegun"/>
+			<referrer name="cmd_kick"/>
+			<referrer name="cmd_ban"/>
+			<param name="data">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="format">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="...">
+				<paraminfo> {Float,_} </paraminfo>
+			</param>
+		</member>
+		<member name="M:sscanf_vehicle" syntax="sscanf_vehicle(string[])">
+			<attribute name="public"/>
+			<stacksize value="6"/>
+			<dependency name="strcmp"/>
+			<dependency name="strval"/>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:sscanf_weapon" syntax="sscanf_weapon(string[])">
+			<attribute name="public"/>
+			<stacksize value="6"/>
+			<dependency name="strcmp"/>
+			<dependency name="strval"/>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:strcmp" syntax="strcmp(string1[], string2[], ignorecase, length)">
+			<attribute name="native"/>
+			<referrer name="sscanf_weapon"/>
+			<referrer name="sscanf_vehicle"/>
+			<referrer name="OnDialogResponse"/>
+			<param name="string1">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="string2">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="ignorecase">
+				<paraminfo>bool </paraminfo>
+			</param>
+			<param name="length">
+			</param>
+		</member>
+		<member name="M:strfind" syntax="strfind(string[], sub[], ignorecase, pos)">
+			<attribute name="native"/>
+			<referrer name="FIXES_ReadIp"/>
+			<referrer name="date"/>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="sub">
+				<paraminfo> [] </paraminfo>
+			</param>
+			<param name="ignorecase">
+				<paraminfo>bool </paraminfo>
+			</param>
+			<param name="pos">
+			</param>
+		</member>
+		<member name="M:strlen" syntax="strlen(string[])">
+			<attribute name="native"/>
+			<referrer name="date"/>
+			<referrer name="OnDialogResponse"/>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:strval" syntax="strval(string[])">
+			<attribute name="native"/>
+			<referrer name="sscanf_weapon"/>
+			<referrer name="sscanf_vehicle"/>
+			<param name="string">
+				<paraminfo> [] </paraminfo>
+			</param>
+		</member>
+		<member name="M:timestamp_to_date" syntax="timestamp_to_date(unix_timestamp, &amp;year, &amp;month, &amp;day, &amp;hour, &amp;minute, &amp;second)">
+			<stacksize value="1"/>
+			<referrer name="date"/>
+			<param name="unix_timestamp">
+			</param>
+			<param name="year">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="month">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="day">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="hour">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="minute">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+			<param name="second">
+				<paraminfo> &amp; </paraminfo>
+			</param>
+		</member>
+
+	</members>
+</doc>
